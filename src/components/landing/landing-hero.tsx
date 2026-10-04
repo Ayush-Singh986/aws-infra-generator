@@ -78,7 +78,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
               <ArrowRight className="h-4 w-4" />
             </Button>
             <a
-              href="https://github.com/NotHarshhaa/aws-infra-generator"
+              href="https://github.com/Ayush-Singh986/aws-infra-generator"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto"

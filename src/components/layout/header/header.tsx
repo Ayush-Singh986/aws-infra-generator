@@ -194,7 +194,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
             <ThemeToggle size="sm" />
 
             <a
-              href="https://github.com/NotHarshhaa/aws-infra-generator"
+              href="https://github.com/Ayush-Singh986/aws-infra-generator"
               target="_blank"
               rel="noopener noreferrer"
               title="View on GitHub"
@@ -279,7 +279,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
               )}
 
               <a
-                href="https://github.com/NotHarshhaa/aws-infra-generator"
+                href="https://github.com/Ayush-Singh986/aws-infra-generator"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"

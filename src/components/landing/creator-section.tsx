@@ -42,8 +42,8 @@ export function CreatorSection() {
           <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
             <div className="relative shrink-0">
               <img
-                src="https://github.com/NotHarshhaa.png"
-                alt="H A R S H H A A"
+                src="https://github.com/Ayush-Singh986.png"
+                alt="Ayush-Singh"
                 className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-cover border border-orange-500/20 shadow-sm"
               />
               <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-md bg-orange-500 text-white border-2 border-background">
@@ -53,7 +53,7 @@ export function CreatorSection() {
 
             <div className="flex-1 text-center sm:text-left space-y-2">
               <div className="flex items-center justify-center sm:justify-start gap-2">
-                <h3 className="text-lg sm:text-xl font-bold tracking-tight">H A R S H H A A</h3>
+                <h3 className="text-lg sm:text-xl font-bold tracking-tight">A Y U S H</h3>
                 <Verified className="h-4 w-4 text-blue-500" />
               </div>
               <p className="text-xs sm:text-sm text-muted-foreground">
@@ -70,7 +70,7 @@ export function CreatorSection() {
               </div>
 
               <a
-                href="https://github.com/NotHarshhaa"
+                href="https://github.com/Ayush-Singh986"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex pt-1"

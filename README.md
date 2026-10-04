@@ -38,7 +38,7 @@ Pick the AWS services you need, configure them through a guided wizard, validate
 ### 1. Get started locally
 
 ```bash
-git clone https://github.com/NotHarshhaa/aws-infra-generator.git
+git clone https://github.com/Ayush-Singh986/aws-infra-generator.git
 cd aws-infra-generator
 npm install
 npm run dev
@@ -114,34 +114,3 @@ Wizard progress is saved locally — refresh the page and pick up where you left
 
 ---
 
-## 🛠️ Author & Community
-
-Built with passion and purpose by [**Harshhaa**](https://github.com/NotHarshhaa).  
-Your ideas, feedback, and contributions are what make this project better.
-
-Let's shape the future of cloud infrastructure together with AWS Infra Generator! 🚀
-
-**Connect & Collaborate:**
-
-* **GitHub:** [@NotHarshhaa](https://github.com/NotHarshhaa)
-* **Blog:** [ProDevOpsGuy](https://blog.prodevopsguytech.com)
-* **Telegram Community:** [Join Here](https://t.me/prodevopsguy)
-* **LinkedIn:** [Harshhaa Vardhan Reddy](https://www.linkedin.com/in/NotHarshhaa/)
-
----
-
-## ⭐ How You Can Support
-
-If you found this project useful:
-
-* ⭐ **Star** the repository to show your support
-* 📢 **Share** it with your friends and colleagues
-* 📝 **Open issues** or **submit pull requests** to help improve it
-
----
-
-### 📢 Stay Connected
-
-[![Follow Me](https://imgur.com/2j7GSPs.png)](https://github.com/NotHarshhaa)
-
-Join the community, share your experience, and help us grow!

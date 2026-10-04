@@ -32,7 +32,7 @@ export function LandingFooter() {
               </a>
             ))}
             <a
-              href="https://github.com/NotHarshhaa/aws-infra-generator"
+              href="https://github.com/Ayush-Singh986/aws-infra-generator"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-[11px] sm:text-xs text-muted-foreground hover:text-foreground transition-colors"

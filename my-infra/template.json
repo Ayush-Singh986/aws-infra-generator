@@ -230,7 +230,6 @@
     "EC2IAMRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
-        "RoleName": { "Fn::Sub": "${ProjectName}-${Environment}-ec2-role" },
         "AssumeRolePolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
@@ -255,7 +254,6 @@
     "EC2InstanceProfile": {
       "Type": "AWS::IAM::InstanceProfile",
       "Properties": {
-        "InstanceProfileName": { "Fn::Sub": "${ProjectName}-${Environment}-ec2-profile" },
         "Roles": [{ "Ref": "EC2IAMRole" }]
       }
     },
@@ -294,7 +292,7 @@
       "Type": "AWS::S3::Bucket",
       "Properties": {
         "BucketName": {
-          "Fn::Sub": "${ProjectName}-${Environment}-${S3BucketSuffix}"
+          "Fn::Sub": "${ProjectName}-${Environment}-${S3BucketSuffix}-${AWS::AccountId}"
         },
         "VersioningConfiguration": {
           "Status": "Enabled"

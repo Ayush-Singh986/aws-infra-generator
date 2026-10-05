@@ -41,9 +41,9 @@ variable "ami_id" {
 }
 
 variable "root_volume_size" {
-  description = "Root EBS volume size in GB"
+  description = "Root EBS volume size in GB (minimum 30 for Amazon Linux 2023)"
   type        = number
-  default     = 20
+  default     = 30
 }
 
 variable "enable_public_ip" {

@@ -10,7 +10,7 @@ vpc_cidr = "10.0.0.0/16"
 # EC2
 instance_type    = "t3.micro"
 instance_count   = 1
-root_volume_size = 20
+root_volume_size = 30
 enable_public_ip = true
 
 # Restrict SSH to your own IP: e.g. ["203.0.113.5/32"]

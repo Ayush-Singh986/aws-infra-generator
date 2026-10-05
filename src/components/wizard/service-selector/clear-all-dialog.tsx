@@ -1,3 +1,5 @@
+"use client";
+
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WizardPanel } from "@/components/wizard/shared";

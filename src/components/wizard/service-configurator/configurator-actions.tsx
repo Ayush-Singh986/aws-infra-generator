@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowLeft, ArrowRight, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { WizardActionBar } from "@/components/wizard/shared";

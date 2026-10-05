@@ -1,3 +1,5 @@
+"use client";
+
 import { Star, AlertTriangle, CheckCircle2, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { getServiceById } from "@/lib/aws-services";

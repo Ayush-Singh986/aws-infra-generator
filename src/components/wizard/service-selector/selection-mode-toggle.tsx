@@ -1,3 +1,5 @@
+"use client";
+
 import { Server, Zap } from "lucide-react";
 import { wizardStyles } from "@/components/wizard/shared";
 

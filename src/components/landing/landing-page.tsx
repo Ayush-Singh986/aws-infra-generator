@@ -1,3 +1,5 @@
+"use client";
+
 import { PresetTemplates } from "@/components/wizard/preset-templates";
 import { LandingHero } from "./landing-hero";
 import { FeaturesSection } from "./features-section";

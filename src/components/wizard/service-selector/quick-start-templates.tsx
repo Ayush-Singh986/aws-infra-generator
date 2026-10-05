@@ -1,3 +1,5 @@
+"use client";
+
 import { Zap, Star, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { PRESET_TEMPLATES, type PresetTemplate, cn } from "@/lib";

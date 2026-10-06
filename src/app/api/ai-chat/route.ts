@@ -52,11 +52,18 @@ export async function POST(req: NextRequest) {
     });
 
     // Convert messages to Gemini format
-    // Last message is the current user message
-    const history = messages.slice(0, -1).map((msg: { role: string; content: string }) => ({
+    // Skip any leading assistant messages — Gemini history must start with user
+    const allExceptLast = messages.slice(0, -1).map((msg: { role: string; content: string }) => ({
       role: msg.role === "assistant" ? "model" : "user",
       parts: [{ text: msg.content }],
     }));
+
+    // Drop leading model turns until the first user turn
+    let startIdx = 0;
+    while (startIdx < allExceptLast.length && allExceptLast[startIdx].role === "model") {
+      startIdx++;
+    }
+    const history = allExceptLast.slice(startIdx);
 
     const lastMessage = messages[messages.length - 1];
 

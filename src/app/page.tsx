@@ -10,6 +10,7 @@ import {
 } from "@/components/wizard";
 import { WizardStepNav } from "@/components/wizard/shared";
 import { LandingPage } from "@/components/landing";
+import { AiChat } from "@/components/ai-chat/ai-chat";
 import { useInfraStore } from "@/lib/store";
 import { WizardStep } from "@/lib/types";
 
@@ -102,6 +103,7 @@ export default function Home() {
         )}
       </main>
       <ScrollToTop />
+      <AiChat />
     </div>
   );
 }

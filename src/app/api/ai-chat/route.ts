@@ -23,7 +23,10 @@ const MODEL_FALLBACKS = [
   "gemini-3.8-flash",
   "gemini-3.5-flash",
   "gemini-3.1-flash-lite",
+  "gemini-3.1-flash-lite-preview",
   "gemini-flash-latest",
+  "gemini-flash-lite-latest",
+  "gemini-pro-latest",
 ];
 
 async function tryGenerate(
@@ -101,6 +104,7 @@ export async function POST(req: NextRequest) {
     const lastMessage = messages[messages.length - 1].content;
 
     // Try each model in the fallback chain
+    // Both 404 (model gone) and 503 (overloaded) move to the next model
     let text = "";
     let lastErr: unknown;
     for (const model of MODEL_FALLBACKS) {
@@ -111,12 +115,15 @@ export async function POST(req: NextRequest) {
       } catch (e: unknown) {
         lastErr = e;
         const msg = e instanceof Error ? e.message : String(e);
-        const isModelGone =
+        const tryNext =
           msg.includes("404") ||
           msg.includes("NOT_FOUND") ||
-          msg.includes("no longer available");
-        if (!isModelGone) throw e; // non-model error — fail immediately
-        console.warn(`Model ${model} unavailable, trying next...`);
+          msg.includes("no longer available") ||
+          msg.includes("503") ||
+          msg.includes("UNAVAILABLE") ||
+          msg.includes("high demand");
+        if (!tryNext) throw e; // auth error, bad request etc — fail immediately
+        console.warn(`Model ${model} unavailable/overloaded, trying next...`);
       }
     }
 

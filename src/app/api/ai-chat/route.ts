@@ -59,8 +59,24 @@ export async function POST(req: NextRequest) {
       history,
     });
 
-    const response = await chat.sendMessage({ message: lastMessage.content });
-    const text = response.text;
+    // Retry up to 3 times on 503 overload errors
+    let response;
+    let lastError;
+    for (let attempt = 1; attempt <= 3; attempt++) {
+      try {
+        response = await chat.sendMessage({ message: lastMessage.content });
+        break;
+      } catch (e: unknown) {
+        lastError = e;
+        const msg = e instanceof Error ? e.message : "";
+        const isOverload = msg.includes("503") || msg.includes("UNAVAILABLE") || msg.includes("overload");
+        if (!isOverload || attempt === 3) throw e;
+        // Wait 1.5s before retrying
+        await new Promise((r) => setTimeout(r, 1500 * attempt));
+      }
+    }
+
+    const text = response!.text;
 
     return NextResponse.json({ content: text });
   } catch (err: unknown) {

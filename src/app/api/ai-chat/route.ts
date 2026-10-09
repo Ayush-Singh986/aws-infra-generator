@@ -18,13 +18,55 @@ When a user describes what they want to build:
 
 Be concise but thorough. Use bullet points. Format service names in backticks like \`EC2\`, \`RDS\`, \`S3\`.`;
 
+// Model fallback chain — tries each model in order until one works
+const MODEL_FALLBACKS = [
+  "gemini-3.8-flash",
+  "gemini-3.5-flash",
+  "gemini-3.1-flash-lite",
+  "gemini-flash-latest",
+];
+
+async function tryGenerate(
+  ai: GoogleGenAI,
+  model: string,
+  history: { role: string; parts: { text: string }[] }[],
+  lastMessage: string
+): Promise<string> {
+  const chat = ai.chats.create({
+    model,
+    config: { systemInstruction: SYSTEM_PROMPT },
+    history,
+  });
+
+  // Retry up to 3 times on 503 overload
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const response = await chat.sendMessage({ message: lastMessage });
+      return response.text ?? "";
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      const isOverload =
+        msg.includes("503") ||
+        msg.includes("UNAVAILABLE") ||
+        msg.includes("overloaded") ||
+        msg.includes("high demand");
+      if (!isOverload || attempt === 3) throw e;
+      await new Promise((r) => setTimeout(r, 1500 * attempt));
+    }
+  }
+  throw new Error("Max retries exceeded");
+}
+
 export async function POST(req: NextRequest) {
   try {
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is not configured. Add it to your .env.local file. Get a free key at https://aistudio.google.com/app/apikey" },
+        {
+          error:
+            "GEMINI_API_KEY is not configured. Add it to your .env.local file. Get a free key at https://aistudio.google.com/apikey",
+        },
         { status: 503 }
       );
     }
@@ -40,43 +82,47 @@ export async function POST(req: NextRequest) {
 
     const ai = new GoogleGenAI({ apiKey });
 
-    // Build conversation history — skip leading assistant messages
+    // Build history — skip leading assistant messages (Gemini requires user first)
     const allExceptLast = messages.slice(0, -1);
     let startIdx = 0;
-    while (startIdx < allExceptLast.length && allExceptLast[startIdx].role === "assistant") {
+    while (
+      startIdx < allExceptLast.length &&
+      allExceptLast[startIdx].role === "assistant"
+    ) {
       startIdx++;
     }
-    const history = allExceptLast.slice(startIdx).map((msg: { role: string; content: string }) => ({
-      role: msg.role === "assistant" ? "model" : "user",
-      parts: [{ text: msg.content }],
-    }));
+    const history = allExceptLast
+      .slice(startIdx)
+      .map((msg: { role: string; content: string }) => ({
+        role: msg.role === "assistant" ? "model" : "user",
+        parts: [{ text: msg.content }],
+      }));
 
-    const lastMessage = messages[messages.length - 1];
+    const lastMessage = messages[messages.length - 1].content;
 
-    const chat = ai.chats.create({
-      model: "gemini-2.5-flash",
-      config: { systemInstruction: SYSTEM_PROMPT },
-      history,
-    });
-
-    // Retry up to 3 times on 503 overload errors
-    let response;
-    let lastError;
-    for (let attempt = 1; attempt <= 3; attempt++) {
+    // Try each model in the fallback chain
+    let text = "";
+    let lastErr: unknown;
+    for (const model of MODEL_FALLBACKS) {
       try {
-        response = await chat.sendMessage({ message: lastMessage.content });
+        text = await tryGenerate(ai, model, history, lastMessage);
+        console.log(`AI response via model: ${model}`);
         break;
       } catch (e: unknown) {
-        lastError = e;
-        const msg = e instanceof Error ? e.message : "";
-        const isOverload = msg.includes("503") || msg.includes("UNAVAILABLE") || msg.includes("overload");
-        if (!isOverload || attempt === 3) throw e;
-        // Wait 1.5s before retrying
-        await new Promise((r) => setTimeout(r, 1500 * attempt));
+        lastErr = e;
+        const msg = e instanceof Error ? e.message : String(e);
+        const isModelGone =
+          msg.includes("404") ||
+          msg.includes("NOT_FOUND") ||
+          msg.includes("no longer available");
+        if (!isModelGone) throw e; // non-model error — fail immediately
+        console.warn(`Model ${model} unavailable, trying next...`);
       }
     }
 
-    const text = response!.text;
+    if (!text) {
+      throw lastErr ?? new Error("All models unavailable");
+    }
 
     return NextResponse.json({ content: text });
   } catch (err: unknown) {

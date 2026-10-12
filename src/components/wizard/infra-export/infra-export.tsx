@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -338,7 +338,7 @@ export function InfraExport({ onBackToHome }: InfraExportProps) {
             Generated successfully with validated syntax
           </div>
           <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-            <Shield className="h-3.5 w-3.5 text-orange-500" />
+            <Shield className="h-3.5 w-3.5 text-red-500" />
             Security & Well-Architected governance checks applied
           </div>
         </div>
@@ -398,7 +398,7 @@ export function InfraExport({ onBackToHome }: InfraExportProps) {
                 size="sm"
                 onClick={handleDownload}
                 disabled={isDownloading}
-                className="w-full sm:w-auto rounded-full h-9 px-5 text-xs font-semibold bg-orange-500 hover:bg-orange-600 text-white shadow-xs"
+                className="w-full sm:w-auto rounded-full h-9 px-5 text-xs font-semibold bg-red-500 hover:bg-red-600 text-white shadow-xs"
               >
                 {isDownloading ? (
                   <>
@@ -645,7 +645,7 @@ export function InfraExport({ onBackToHome }: InfraExportProps) {
                     className={cn(
                       "cursor-pointer rounded-2xl border p-3.5 transition-all text-left",
                       isSelected
-                        ? "border-orange-500/60 bg-orange-500/10 shadow-xs ring-1 ring-orange-500/20"
+                        ? "border-red-500/60 bg-red-500/10 shadow-xs ring-1 ring-red-500/20"
                         : "border-border/70 hover:bg-muted/40"
                     )}
                     onClick={() => setSelectedDeployment(option.id)}
@@ -653,7 +653,7 @@ export function InfraExport({ onBackToHome }: InfraExportProps) {
                     <div className="flex items-center gap-2.5">
                       <div className={cn(
                         "flex h-9 w-9 items-center justify-center rounded-xl",
-                        isSelected ? "bg-orange-500 text-white" : "bg-muted text-muted-foreground"
+                        isSelected ? "bg-red-500 text-white" : "bg-muted text-muted-foreground"
                       )}>
                         <Icon className="h-4 w-4" />
                       </div>

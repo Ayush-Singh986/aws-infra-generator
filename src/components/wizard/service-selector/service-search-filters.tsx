@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Search, Star, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -37,7 +37,7 @@ export function ServiceSearchFilters({
           placeholder="Search 30+ AWS services (e.g., VPC, Lambda, RDS, SQS)..."
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="h-10 pl-10 pr-9 rounded-full text-xs sm:text-sm bg-muted/40 border-border/70 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-orange-500/30 transition-all"
+          className="h-10 pl-10 pr-9 rounded-full text-xs sm:text-sm bg-muted/40 border-border/70 focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-red-500/30 transition-all"
         />
         {searchQuery && (
           <button
@@ -57,7 +57,7 @@ export function ServiceSearchFilters({
           className={cn(
             "shrink-0 rounded-full px-3 py-1.5 text-xs font-medium border transition-all cursor-pointer",
             !selectedCategory
-              ? "bg-orange-500 text-white border-orange-500 shadow-xs"
+              ? "bg-red-500 text-white border-red-500 shadow-xs"
               : "bg-muted/30 text-muted-foreground border-border/60 hover:bg-muted/70 hover:text-foreground"
           )}
         >
@@ -74,11 +74,11 @@ export function ServiceSearchFilters({
               className={cn(
                 "inline-flex items-center gap-1.5 shrink-0 rounded-full px-3 py-1.5 text-xs font-medium border transition-all cursor-pointer",
                 isSelected
-                  ? "bg-orange-500 text-white border-orange-500 shadow-xs"
+                  ? "bg-red-500 text-white border-red-500 shadow-xs"
                   : "bg-muted/30 text-muted-foreground border-border/60 hover:bg-muted/70 hover:text-foreground"
               )}
             >
-              {Icon && <Icon className={cn("h-3 w-3", isSelected ? "text-white" : "text-orange-500")} />}
+              {Icon && <Icon className={cn("h-3 w-3", isSelected ? "text-white" : "text-red-500")} />}
               {category.label}
             </button>
           );

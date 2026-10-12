@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useMemo } from "react";
 import {
@@ -415,7 +415,7 @@ export function InfraDiagram() {
                   networking: { bg: "#e0e7ff", border: "#6366f1", icon: "#4f46e5" },
                   security: { bg: "#fce7f3", border: "#ec4899", icon: "#db2777" },
                   messaging: { bg: "#fae8ff", border: "#a855f7", icon: "#9333ea" },
-                  management: { bg: "#fed7aa", border: "#f97316", icon: "#ea580c" },
+                  management: { bg: "#fed7aa", border: "#dc2626", icon: "#b91c1c" },
                 };
 
                 const colors = categoryColors[node.category] || { bg: "#f3f4f6", border: "#9ca3af", icon: "#6b7280" };

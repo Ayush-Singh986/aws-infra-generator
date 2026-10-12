@@ -1,4 +1,4 @@
-import { CheckCircle2 } from "lucide-react";
+﻿import { CheckCircle2 } from "lucide-react";
 import type { ServiceDetailItem } from "../landing-data";
 import { landingStyles } from "../shared/landing-styles";
 
@@ -21,7 +21,7 @@ export function ServiceDetailCard({ service }: ServiceDetailCardProps) {
       <ul className="mt-3 space-y-1">
         {service.features.map((feature) => (
           <li key={feature} className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground">
-            <CheckCircle2 className="h-3 w-3 shrink-0 text-orange-500" />
+            <CheckCircle2 className="h-3 w-3 shrink-0 text-red-500" />
             {feature}
           </li>
         ))}

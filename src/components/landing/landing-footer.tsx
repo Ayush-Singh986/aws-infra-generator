@@ -1,4 +1,4 @@
-import { Github, Heart } from "lucide-react";
+﻿import { Github, Heart } from "lucide-react";
 import { landingStyles } from "./shared/landing-styles";
 import { cn } from "@/lib/utils";
 
@@ -26,7 +26,7 @@ export function LandingFooter() {
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[11px] sm:text-xs text-muted-foreground hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                className="text-[11px] sm:text-xs text-muted-foreground hover:text-red-600 dark:hover:text-red-400 transition-colors"
               >
                 {link.label}
               </a>
@@ -46,7 +46,7 @@ export function LandingFooter() {
         <div className="mt-4 pt-4 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] sm:text-xs text-muted-foreground">
           <p>Built with Next.js, Tailwind CSS, and FastAPI</p>
           <p className="inline-flex items-center gap-1">
-            MIT License · Made with <Heart className="h-3 w-3 text-orange-500" /> for DevOps
+            MIT License · Made with <Heart className="h-3 w-3 text-red-500" /> for DevOps
           </p>
         </div>
       </div>

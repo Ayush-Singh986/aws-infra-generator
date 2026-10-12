@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   Accordion,
@@ -42,7 +42,7 @@ export function ServiceConfigAccordion({
             >
               <AccordionTrigger className="hover:no-underline py-2 sm:py-3 text-xs sm:text-sm">
                 <div className="flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-orange-500/15 text-orange-600">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-md bg-red-500/15 text-red-600">
                     {Icon && <Icon className="h-3.5 w-3.5" />}
                   </div>
                   <div className="text-left">

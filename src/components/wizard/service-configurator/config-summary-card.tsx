@@ -1,4 +1,4 @@
-import { Badge } from "@/components/ui/badge";
+﻿import { Badge } from "@/components/ui/badge";
 import { WizardPanel, WizardStatRow } from "@/components/wizard/shared";
 
 interface ConfigSummaryCardProps {
@@ -19,7 +19,7 @@ export function ConfigSummaryCard({
       <WizardStatRow
         columns={3}
         stats={[
-          { label: "Services", value: serviceCount, valueClassName: "text-orange-600" },
+          { label: "Services", value: serviceCount, valueClassName: "text-red-600" },
           {
             label: "Environment",
             value: (

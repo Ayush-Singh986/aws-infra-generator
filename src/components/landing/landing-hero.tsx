@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowRight, Github, Sparkles, Terminal } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -45,7 +45,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </div>
 
           <div className="flex justify-center lg:justify-start">
-            <div className="inline-flex items-center justify-center rounded-2xl border border-orange-500/20 bg-card/85 p-3.5 shadow-xs backdrop-blur-xl hover:border-orange-500/35 transition-colors">
+            <div className="inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-card/85 p-3.5 shadow-xs backdrop-blur-xl hover:border-red-500/35 transition-colors">
               <img
                 src={logoSrc}
                 alt="AWS Logo"
@@ -57,7 +57,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12]">
             Design AWS infrastructure.
-            <span className="block bg-gradient-to-r from-orange-600 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-red-600 via-red-400 to-red-500 bg-clip-text text-transparent">
               Generate IaC in seconds.
             </span>
           </h1>
@@ -93,7 +93,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl mx-auto lg:mx-0 pt-2">
             {HERO_STATS.map((stat) => (
               <div key={stat.label} className={cn(landingStyles.statChip, "p-3 rounded-2xl bg-card/60")}>
-                <span className={cn(landingStyles.statValue, "text-orange-600 dark:text-orange-400 text-lg sm:text-2xl")}>
+                <span className={cn(landingStyles.statValue, "text-red-600 dark:text-red-400 text-lg sm:text-2xl")}>
                   {stat.value}
                 </span>
                 <span className={landingStyles.statLabel}>{stat.label}</span>
@@ -102,14 +102,14 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </div>
         </div>
 
-        <div className={cn(landingStyles.panelAccent, "relative overflow-hidden p-0 rounded-3xl shadow-sm border-orange-500/25")}>
+        <div className={cn(landingStyles.panelAccent, "relative overflow-hidden p-0 rounded-3xl shadow-sm border-red-500/25")}>
           <div className="flex items-center gap-2 border-b border-border/50 bg-muted/40 px-4 py-3">
             <div className="flex items-center gap-1.5 mr-2">
               <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
               <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
             </div>
-            <Terminal className="h-3.5 w-3.5 text-orange-500" />
+            <Terminal className="h-3.5 w-3.5 text-red-500" />
             <span className="text-xs font-medium text-muted-foreground font-mono">
               main.tf — live preview
             </span>

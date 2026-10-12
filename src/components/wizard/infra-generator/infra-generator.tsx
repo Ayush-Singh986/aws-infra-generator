@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -294,7 +294,7 @@ export function InfraGenerator({ onBackToHome }: InfraGeneratorProps) {
             {
               label: "Format",
               value: (
-                <Badge className="text-[10px] bg-orange-500/15 text-orange-700 dark:text-orange-300 border-orange-500/20">
+                <Badge className="text-[10px] bg-red-500/15 text-red-700 dark:text-red-300 border-red-500/20">
                   {outputFormat}
                 </Badge>
               ),
@@ -548,7 +548,7 @@ export function InfraGenerator({ onBackToHome }: InfraGeneratorProps) {
             size="sm"
             onClick={handleGenerate}
             disabled={isGenerating || isValidating || selectedServices.length === 0}
-            className="h-8 flex-1 sm:h-9 text-xs bg-orange-500 hover:bg-orange-600 text-white"
+            className="h-8 flex-1 sm:h-9 text-xs bg-red-500 hover:bg-red-600 text-white"
           >
             {isGenerating ? (
               <Loader2 className="mr-1 h-3 w-3 animate-spin" />
@@ -561,7 +561,7 @@ export function InfraGenerator({ onBackToHome }: InfraGeneratorProps) {
             <Button
               size="sm"
               onClick={() => setStep("export")}
-              className="h-8 flex-1 sm:h-9 text-xs bg-orange-500 hover:bg-orange-600 text-white"
+              className="h-8 flex-1 sm:h-9 text-xs bg-red-500 hover:bg-red-600 text-white"
             >
               Export
               <ArrowRight className="ml-1 h-3 w-3" />

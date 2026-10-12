@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowLeft, ArrowRight, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -33,7 +33,7 @@ export function ConfiguratorActions({
         onClick={onContinue}
         size="sm"
         disabled={!canContinue}
-        className="h-8 w-full sm:w-auto sm:h-9 text-xs bg-orange-500 hover:bg-orange-600 text-white disabled:opacity-50"
+        className="h-8 w-full sm:w-auto sm:h-9 text-xs bg-red-500 hover:bg-red-600 text-white disabled:opacity-50"
       >
         Continue to Generate
         <ArrowRight className="ml-1.5 h-3 w-3" />

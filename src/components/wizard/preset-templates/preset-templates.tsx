@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import {
@@ -120,7 +120,7 @@ export function PresetTemplates({ onTemplateSelect }: PresetTemplatesProps) {
 
       <div className={cn(landingStyles.panel, "overflow-hidden")}>
         <div className="border-b border-border/60 px-3 py-3 sm:px-4 flex items-center gap-2">
-          <Search className="h-4 w-4 text-orange-500" />
+          <Search className="h-4 w-4 text-red-500" />
           <span className="text-sm font-semibold">Find templates</span>
         </div>
         <div className="p-3 sm:p-4 space-y-4">
@@ -207,7 +207,7 @@ export function PresetTemplates({ onTemplateSelect }: PresetTemplatesProps) {
               onClick={() => handleTemplateSelect(template)}
               className={cn(
                 landingStyles.card,
-                "text-left cursor-pointer hover:border-orange-500/35 hover:shadow-md"
+                "text-left cursor-pointer hover:border-red-500/35 hover:shadow-md"
               )}
             >
               <div className="flex items-start gap-3">

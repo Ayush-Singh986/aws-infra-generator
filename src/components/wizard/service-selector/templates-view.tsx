@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo } from "react";
 import { Zap, Star, ArrowRight, ChevronDown, ChevronUp, Package } from "lucide-react";
@@ -48,7 +48,7 @@ export function TemplatesView({
                 className="flex w-full items-center justify-between gap-2 px-2.5 py-2 sm:px-3 sm:py-2.5 bg-muted/30 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-2 min-w-0">
-                  {CategoryIcon && <CategoryIcon className="h-3.5 w-3.5 text-orange-500 shrink-0" />}
+                  {CategoryIcon && <CategoryIcon className="h-3.5 w-3.5 text-red-500 shrink-0" />}
                   <span className="text-xs sm:text-sm font-medium capitalize truncate">
                     {category}
                   </span>
@@ -78,11 +78,11 @@ export function TemplatesView({
                         onClick={() => onSelectTemplate(template)}
                         className={cn(
                           "flex flex-col rounded-md border border-border/60 p-2 text-left",
-                          "hover:border-orange-500/40 hover:bg-orange-500/5 transition-all"
+                          "hover:border-red-500/40 hover:bg-red-500/5 transition-all"
                         )}
                       >
                         <div className="flex items-center gap-2 mb-1.5">
-                          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-orange-500/15 text-orange-600">
+                          <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded bg-red-500/15 text-red-600">
                             {Icon && <Icon className="h-3 w-3" />}
                           </div>
                           <span className="text-xs font-semibold truncate flex-1">{template.name}</span>
@@ -96,7 +96,7 @@ export function TemplatesView({
                             {template.difficulty.slice(0, 3)}
                           </Badge>
                         </div>
-                        <span className="text-[10px] text-orange-600 dark:text-orange-400 inline-flex items-center gap-1">
+                        <span className="text-[10px] text-red-600 dark:text-red-400 inline-flex items-center gap-1">
                           Use <ArrowRight className="h-2.5 w-2.5" />
                         </span>
                       </button>

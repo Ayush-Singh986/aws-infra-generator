@@ -1,4 +1,4 @@
-import { CheckCircle2, Zap } from "lucide-react";
+﻿import { CheckCircle2, Zap } from "lucide-react";
 import { HOW_IT_WORKS_STEPS } from "./landing-data";
 import { LandingSection } from "./shared/landing-section";
 import { landingStyles } from "./shared/landing-styles";
@@ -21,7 +21,7 @@ export function HowItWorksSection() {
 
               <div className={landingStyles.cardAccent}>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-orange-500 text-sm font-bold text-white shadow-sm shadow-orange-500/20">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-red-500 text-sm font-bold text-white shadow-sm shadow-red-500/20">
                     {item.step}
                   </span>
                   <item.icon className="h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
@@ -35,7 +35,7 @@ export function HowItWorksSection() {
                 <ul className="mt-3 space-y-1.5">
                   {item.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-2 text-[11px] sm:text-xs">
-                      <CheckCircle2 className="h-3 w-3 shrink-0 text-orange-500" />
+                      <CheckCircle2 className="h-3 w-3 shrink-0 text-red-500" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -47,7 +47,7 @@ export function HowItWorksSection() {
 
         <div className="text-center">
           <div className={cn(landingStyles.pill, "mx-auto w-fit px-4 py-2")}>
-            <Zap className="h-4 w-4 text-orange-500" />
+            <Zap className="h-4 w-4 text-red-500" />
             <span className="font-semibold">Ready in minutes, not hours</span>
           </div>
           <p className="mt-2 text-[11px] sm:text-sm text-muted-foreground max-w-2xl mx-auto">

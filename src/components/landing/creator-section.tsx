@@ -1,4 +1,4 @@
-import {
+﻿import {
   Code,
   CloudCog,
   GitFork,
@@ -44,9 +44,9 @@ export function CreatorSection() {
               <img
                 src="https://github.com/Ayush-Singh986.png"
                 alt="Ayush-Singh"
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-cover border border-orange-500/20 shadow-sm"
+                className="h-16 w-16 sm:h-20 sm:w-20 rounded-xl object-cover border border-red-500/20 shadow-sm"
               />
-              <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-md bg-orange-500 text-white border-2 border-background">
+              <div className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-md bg-red-500 text-white border-2 border-background">
                 <Code className="h-3 w-3" />
               </div>
             </div>
@@ -63,7 +63,7 @@ export function CreatorSection() {
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-1">
                 {CREATOR_TAGS.map(({ icon: Icon, label }) => (
                   <span key={label} className={landingStyles.pill}>
-                    <Icon className="h-3 w-3 text-orange-500" />
+                    <Icon className="h-3 w-3 text-red-500" />
                     {label}
                   </span>
                 ))}
@@ -84,7 +84,7 @@ export function CreatorSection() {
             </div>
           </div>
 
-          <div className="mt-5 pt-4 border-t border-orange-500/15 space-y-3">
+          <div className="mt-5 pt-4 border-t border-red-500/15 space-y-3">
             <p className="text-[11px] sm:text-sm text-muted-foreground leading-relaxed text-center sm:text-left">
               Passionate about scalable infrastructure and automation tools that simplify complex
               cloud management for engineering teams.
@@ -92,7 +92,7 @@ export function CreatorSection() {
             <div className="flex flex-wrap justify-center sm:justify-start gap-2">
               {CREATOR_FOCUS.map(({ icon: Icon, label }) => (
                 <span key={label} className="inline-flex items-center gap-1 text-[10px] sm:text-xs text-muted-foreground">
-                  <Icon className="h-3 w-3 text-orange-500" />
+                  <Icon className="h-3 w-3 text-red-500" />
                   {label}
                 </span>
               ))}

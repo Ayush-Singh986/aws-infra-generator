@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ export function InfrastructureOverview({
       <WizardStatRow
         columns={5}
         stats={[
-          { label: "Selected", value: stats.selectedServices, valueClassName: "text-orange-600 dark:text-orange-400" },
+          { label: "Selected", value: stats.selectedServices, valueClassName: "text-red-600 dark:text-red-400" },
           { label: "Deps", value: stats.requiredDependencies, valueClassName: "text-blue-600" },
           { label: "Total", value: stats.totalServices, valueClassName: "text-emerald-600" },
           {

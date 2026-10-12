@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { ArrowRight, Home, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -28,7 +28,7 @@ export function SelectedServicesFooter({
           <WizardStatRow
             columns={3}
             stats={[
-              { label: "Selected", value: selectedServices.length, valueClassName: "text-orange-600" },
+              { label: "Selected", value: selectedServices.length, valueClassName: "text-red-600" },
               { label: "Deps", value: stats.requiredDependencies, valueClassName: "text-blue-600" },
               { label: "Total", value: stats.totalServices, valueClassName: "text-emerald-600" },
             ]}
@@ -74,7 +74,7 @@ export function SelectedServicesFooter({
           onClick={onNext}
           disabled={selectedServices.length === 0}
           size="sm"
-          className="h-8 flex-1 sm:flex-none sm:h-9 text-xs bg-orange-500 hover:bg-orange-600 text-white"
+          className="h-8 flex-1 sm:flex-none sm:h-9 text-xs bg-red-500 hover:bg-red-600 text-white"
         >
           Configure
           <ArrowRight className="ml-1.5 h-3.5 w-3.5" />

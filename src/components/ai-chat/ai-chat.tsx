@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
@@ -68,7 +68,7 @@ function StyleInjector() {
 function AstroBot({
   thinking = false,
   walking  = false,
-  size     = 110,
+  size     = 75,
 }: {
   thinking?: boolean;
   walking?: boolean;
@@ -438,7 +438,7 @@ function SpeechBubble({ text, side }: { text: string; side: "left" | "right" }) 
 function RoamingAstro({ isOpen, thinking, hasNew, onClick }: {
   isOpen: boolean; thinking: boolean; hasNew: boolean; onClick: () => void;
 }) {
-  const ROBOT_W = 110, ROBOT_H = 130;
+  const ROBOT_W = 75, ROBOT_H = 90;
   const [pos,     setPos]     = useState({ x: 0, y: 0 });
   const [dir,     setDir]     = useState<"left"|"right">("right");
   const [walking, setWalking] = useState(false);
@@ -537,7 +537,7 @@ function RoamingAstro({ isOpen, thinking, hasNew, onClick }: {
         <span style={{
           position:"absolute", top:-2, right:-2, zIndex:62,
           width:18, height:18, borderRadius:"50%",
-          background:"#f97316", color:"white",
+          background:"#dc2626", color:"white",
           fontSize:9, fontWeight:800,
           display:"flex", alignItems:"center", justifyContent:"center",
           border:"2px solid white",
@@ -567,7 +567,7 @@ function RoamingAstro({ isOpen, thinking, hasNew, onClick }: {
         }}>thinking… 🤔</div>
       )}
 
-      <AstroBot thinking={thinking} walking={walking && !hovered} size={110}/>
+      <AstroBot thinking={thinking} walking={walking && !hovered} size={75}/>
     </button>
   );
 }
@@ -600,7 +600,7 @@ function MessageBubble({ msg }: { msg: Message }) {
     <div className={cn("flex gap-2 items-end", isUser && "flex-row-reverse")}
       style={{ animation:"msgIn .2s ease-out forwards" }}>
       <div className={cn("flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-white",
-        isUser ? "bg-gradient-to-br from-orange-400 to-orange-600"
+        isUser ? "bg-gradient-to-br from-red-400 to-red-600"
                : "bg-gradient-to-br from-cyan-500 to-blue-600")}>
         {isUser ? <User className="h-3 w-3"/> : (
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -612,12 +612,12 @@ function MessageBubble({ msg }: { msg: Message }) {
       </div>
       <div className={cn(
         "max-w-[82%] rounded-2xl px-3 py-2 text-xs leading-relaxed shadow-sm",
-        isUser ? "rounded-br-sm bg-gradient-to-br from-orange-500 to-orange-600 text-white"
+        isUser ? "rounded-br-sm bg-gradient-to-br from-red-500 to-red-600 text-white"
                : "rounded-bl-sm bg-card border border-border/60 text-foreground",
       )}>
         <p className="whitespace-pre-wrap break-words">{fmt(msg.content)}</p>
         <span className={cn("mt-0.5 block text-[10px]",
-          isUser ? "text-right text-orange-100/60" : "text-muted-foreground")}>
+          isUser ? "text-right text-red-100/60" : "text-muted-foreground")}>
           {msg.timestamp.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"})}
         </span>
       </div>
@@ -653,7 +653,7 @@ function ChatWindow({ onClose, thinking, messages, isLoading, error, input, setI
       <div className="flex shrink-0 items-center gap-3 px-4 py-2.5"
         style={{ background:"linear-gradient(135deg,#0e7490 0%,#0891b2 50%,#ef4444 100%)" }}>
         <div className="relative shrink-0">
-          <AstroBot thinking={thinking} walking={false} size={40}/>
+          <AstroBot thinking={thinking} walking={false} size={30}/>
           <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-background">
             <span className="absolute inset-0 rounded-full bg-emerald-400"
               style={{ animation:"pingDot 1.4s ease-out infinite" }}/>

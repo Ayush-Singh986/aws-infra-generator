@@ -1,4 +1,4 @@
-import {
+﻿import {
   Server,
   HardDrive,
   Database,
@@ -40,10 +40,10 @@ export function SupportedServicesSection() {
               key={service.name}
               className={cn(
                 landingStyles.card,
-                "p-2.5 sm:p-3 flex items-center gap-2 hover:border-orange-500/30"
+                "p-2.5 sm:p-3 flex items-center gap-2 hover:border-red-500/30"
               )}
             >
-              <service.icon className="h-4 w-4 shrink-0 text-orange-500" />
+              <service.icon className="h-4 w-4 shrink-0 text-red-500" />
               <div className="min-w-0 flex-1">
                 <div className="font-semibold text-[11px] sm:text-xs truncate">{service.name}</div>
                 <div className="text-[10px] text-muted-foreground capitalize hidden sm:block truncate">
@@ -107,7 +107,7 @@ export function SupportedServicesSection() {
                 <ul className="mt-3 space-y-1">
                   {["Roles & policies", "Fine-grained access", "Multi-factor auth"].map((feature) => (
                     <li key={feature} className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground">
-                      <CheckCircle2 className="h-3 w-3 text-orange-500" />
+                      <CheckCircle2 className="h-3 w-3 text-red-500" />
                       {feature}
                     </li>
                   ))}
@@ -171,7 +171,7 @@ export function SupportedServicesSection() {
               <ul className="mt-3 space-y-1">
                 {["Metrics", "Logs", "Alarms", "Dashboards"].map((feature) => (
                   <li key={feature} className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground">
-                    <CheckCircle2 className="h-3 w-3 text-orange-500" />
+                    <CheckCircle2 className="h-3 w-3 text-red-500" />
                     {feature}
                   </li>
                 ))}

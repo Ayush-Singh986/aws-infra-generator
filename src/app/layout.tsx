@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/layout";
@@ -35,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} antialiased font-sans overflow-x-hidden selection:bg-orange-500/20 selection:text-orange-600`}
+        className={`${plusJakartaSans.variable} ${jetbrainsMono.variable} antialiased font-sans overflow-x-hidden selection:bg-red-500/20 selection:text-red-600`}
       >
         <ThemeProvider
           attribute="class"

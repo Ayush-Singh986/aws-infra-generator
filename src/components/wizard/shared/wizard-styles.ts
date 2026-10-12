@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+﻿import { cn } from "@/lib/utils";
 
 export const wizardStyles = {
   shell: cn(
@@ -8,8 +8,8 @@ export const wizardStyles = {
     "before:[background-size:28px_28px] dark:before:bg-[radial-gradient(circle_at_1px_1px,oklch(0.9_0_0/0.03)_1px,transparent_0)]"
   ),
   header: cn(
-    "relative overflow-hidden rounded-2xl border border-orange-500/20",
-    "bg-gradient-to-br from-orange-500/10 via-card/90 to-card/60 backdrop-blur-md transform-gpu",
+    "relative overflow-hidden rounded-2xl border border-red-500/20",
+    "bg-gradient-to-br from-red-500/10 via-card/90 to-card/60 backdrop-blur-md transform-gpu",
     "p-4 sm:p-5 shadow-xs transition-all"
   ),
   headerTitle: "text-lg sm:text-2xl font-bold tracking-tight text-foreground",
@@ -20,9 +20,9 @@ export const wizardStyles = {
     "dark:bg-card/85 dark:border-border/50"
   ),
   panelAccent: cn(
-    "rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/8 via-card/90 to-card/70",
-    "shadow-xs transition-all duration-200 hover:shadow-sm hover:border-orange-500/35",
-    "dark:from-orange-500/12 dark:to-card/75"
+    "rounded-2xl border border-red-500/25 bg-gradient-to-br from-red-500/8 via-card/90 to-card/70",
+    "shadow-xs transition-all duration-200 hover:shadow-sm hover:border-red-500/35",
+    "dark:from-red-500/12 dark:to-card/75"
   ),
   panelHeader: "flex items-center justify-between gap-3 px-4 pt-4 pb-3 sm:px-5 sm:pt-5 sm:pb-3 border-b border-border/40",
   panelTitle: "text-sm sm:text-base font-semibold flex items-center gap-2 text-foreground tracking-tight",
@@ -45,7 +45,7 @@ export const wizardStyles = {
     cn(
       "flex-1 sm:flex-none rounded-full px-3 py-1.5 text-xs sm:text-sm font-medium transition-all cursor-pointer",
       active
-        ? "bg-orange-500 text-white shadow-xs"
+        ? "bg-red-500 text-white shadow-xs"
         : "text-muted-foreground hover:text-foreground hover:bg-background/80"
     ),
   actionBar: cn(

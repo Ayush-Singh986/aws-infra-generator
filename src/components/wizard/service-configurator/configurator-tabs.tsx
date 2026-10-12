@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { LucideIcon } from "lucide-react";
 import { Network, DollarSign, Projector, Eye } from "lucide-react";
@@ -23,9 +23,9 @@ const tabTriggerClass = cn(
   "text-xs sm:text-sm font-medium whitespace-nowrap",
   "text-muted-foreground transition-colors",
   "hover:bg-muted/60 hover:text-foreground",
-  "data-active:bg-orange-500 data-active:text-white data-active:shadow-sm data-active:shadow-orange-500/20",
-  "dark:data-active:bg-orange-500 dark:data-active:text-white dark:data-active:border-transparent",
-  "after:hidden focus-visible:ring-orange-500/30"
+  "data-active:bg-red-500 data-active:text-white data-active:shadow-sm data-active:shadow-red-500/20",
+  "dark:data-active:bg-red-500 dark:data-active:text-white dark:data-active:border-transparent",
+  "after:hidden focus-visible:ring-red-500/30"
 );
 
 interface ConfiguratorTabsProps {

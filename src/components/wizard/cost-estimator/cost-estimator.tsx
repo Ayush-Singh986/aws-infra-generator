@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useMemo } from "react";
 import {
@@ -83,7 +83,7 @@ export function CostEstimator() {
     if (cost === 0) return "text-emerald-600 dark:text-emerald-400";
     if (cost < 50) return "text-emerald-600 dark:text-emerald-400";
     if (cost < 200) return "text-yellow-600 dark:text-yellow-400";
-    if (cost < 500) return "text-orange-600 dark:text-orange-400";
+    if (cost < 500) return "text-red-600 dark:text-red-400";
     return "text-red-600 dark:text-red-400";
   };
 
@@ -107,11 +107,11 @@ export function CostEstimator() {
   return (
     <div className="space-y-4">
       {/* Primary Cost Header Card */}
-      <div className="rounded-2xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-card to-card p-4 sm:p-5 shadow-xs">
+      <div className="rounded-2xl border border-red-500/20 bg-gradient-to-br from-red-500/10 via-card to-card p-4 sm:p-5 shadow-xs">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
           <div>
             <h3 className="text-sm font-semibold flex items-center gap-2">
-              <DollarSign className="h-4 w-4 text-orange-500" />
+              <DollarSign className="h-4 w-4 text-red-500" />
               Estimated Infrastructure Monthly Cost
             </h3>
             <p className="text-xs text-muted-foreground capitalize">
@@ -152,13 +152,13 @@ export function CostEstimator() {
 
       {/* FinOps Proactive Optimization Advisor */}
       {finOpsData && finOpsData.recommendations.length > 0 && (
-        <div className="rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/5 via-card to-card p-4 shadow-xs">
+        <div className="rounded-2xl border border-red-500/25 bg-gradient-to-br from-red-500/5 via-card to-card p-4 shadow-xs">
           <div className="flex items-center justify-between gap-2 mb-3">
             <h3 className="text-sm font-semibold flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-orange-500" />
+              <Sparkles className="h-4 w-4 text-red-500" />
               FinOps Right-Sizing & Savings Opportunities
             </h3>
-            <Badge className="rounded-full bg-orange-500/10 text-orange-700 dark:text-orange-300 border-orange-500/25 text-[10px]">
+            <Badge className="rounded-full bg-red-500/10 text-red-700 dark:text-red-300 border-red-500/25 text-[10px]">
               Save up to ${finOpsData.potentialMonthlySavingsUsd.toFixed(2)}/mo
             </Badge>
           </div>
@@ -188,7 +188,7 @@ export function CostEstimator() {
                   <Button
                     size="sm"
                     onClick={() => handleApplyFinOps(rec)}
-                    className="shrink-0 h-7 rounded-full text-xs bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-xs"
+                    className="shrink-0 h-7 rounded-full text-xs bg-red-500 hover:bg-red-600 text-white font-medium shadow-xs"
                   >
                     <Zap className="mr-1 h-3 w-3" />
                     Apply Graviton
@@ -260,7 +260,7 @@ export function CostEstimator() {
                       <ul className="space-y-1">
                         {service.notes.map((note, idx) => (
                           <li key={idx} className="text-[11px] text-muted-foreground flex items-start gap-1.5">
-                            <span className="text-orange-500 mt-0.5">•</span>
+                            <span className="text-red-500 mt-0.5">•</span>
                             <span>{note}</span>
                           </li>
                         ))}

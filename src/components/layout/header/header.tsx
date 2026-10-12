@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import {
   Github,
@@ -115,7 +115,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
             className="group flex min-w-0 shrink-0 items-center gap-2.5 rounded-full border-0 bg-transparent p-1 -ml-1 cursor-pointer transition-transform hover:scale-[1.02]"
           >
             <div
-              className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-orange-500/20 via-orange-500/10 to-amber-500/10 border border-orange-500/20 shadow-xs group-hover:border-orange-500/40 transition-colors"
+              className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-red-500/20 via-red-500/10 to-amber-500/10 border border-red-500/20 shadow-xs group-hover:border-red-500/40 transition-colors"
             >
               <img
                 src={logoSrc}
@@ -126,10 +126,10 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
             </div>
             <div className="min-w-0 text-left">
               <div className="flex items-center gap-1.5">
-                <span className="block truncate text-sm sm:text-base font-bold tracking-tight leading-none group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                <span className="block truncate text-sm sm:text-base font-bold tracking-tight leading-none group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors">
                   AWS Infra
                 </span>
-                <span className="rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20 px-1.5 py-0.2 text-[9px] font-semibold uppercase tracking-wider">
+                <span className="rounded-full bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20 px-1.5 py-0.2 text-[9px] font-semibold uppercase tracking-wider">
                   Studio
                 </span>
               </div>
@@ -149,7 +149,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
                     onClick={() => handleNavClick(item.id)}
                     className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-medium text-muted-foreground transition-all hover:bg-background hover:text-foreground hover:shadow-xs cursor-pointer"
                   >
-                    <item.icon className="h-3.5 w-3.5 text-orange-500" />
+                    <item.icon className="h-3.5 w-3.5 text-red-500" />
                     {item.label}
                   </button>
                 ))}
@@ -159,7 +159,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
 
           {!showNav && (
             <div className="hidden sm:flex flex-1 items-center pl-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-orange-500/20 bg-orange-500/10 px-3 py-1 text-xs font-medium text-orange-600 dark:text-orange-400">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-red-500/20 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-600 dark:text-red-400">
                 <Sparkles className="h-3 w-3" />
                 Active Studio Session
               </span>
@@ -171,7 +171,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
               <Button
                 size="sm"
                 onClick={handleGetStarted}
-                className="hidden md:inline-flex rounded-full px-4 h-8 sm:h-9 text-xs font-medium bg-orange-500 hover:bg-orange-600 text-white shadow-xs hover:shadow-sm gap-1.5 transition-all"
+                className="hidden md:inline-flex rounded-full px-4 h-8 sm:h-9 text-xs font-medium bg-red-500 hover:bg-red-600 text-white shadow-xs hover:shadow-sm gap-1.5 transition-all"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 Launch Studio
@@ -235,7 +235,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
             className={cn(
               landingStyles.panel,
               "lg:hidden fixed top-[3.65rem] left-3 right-3 z-50 overflow-hidden",
-              "shadow-lg shadow-orange-500/5 animate-in fade-in slide-in-from-top-2 duration-200"
+              "shadow-lg shadow-red-500/5 animate-in fade-in slide-in-from-top-2 duration-200"
             )}
           >
             <div className="border-b border-border/60 px-3 py-2.5 flex items-center justify-between">
@@ -251,7 +251,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
                   onClick={() => handleNavClick(item.id)}
                   className={cn(
                     landingStyles.card,
-                    "w-full flex items-center gap-3 p-3 text-left border-0 hover:border-orange-500/25"
+                    "w-full flex items-center gap-3 p-3 text-left border-0 hover:border-red-500/25"
                   )}
                 >
                   <div className={landingStyles.iconBox}>
@@ -287,7 +287,7 @@ export function Header({ onBackToHome, showNav = true, onGetStarted }: HeaderPro
                 <span
                   className={cn(
                     landingStyles.pill,
-                    "w-full justify-center py-2 hover:border-orange-500/30 transition-colors"
+                    "w-full justify-center py-2 hover:border-red-500/30 transition-colors"
                   )}
                 >
                   <Github className="h-3.5 w-3.5" />

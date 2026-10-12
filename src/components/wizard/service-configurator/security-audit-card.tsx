@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useMemo, useState } from "react";
 import { ShieldCheck, ShieldAlert, AlertTriangle, Info, CheckCircle2, Wrench, FileCheck, Layers } from "lucide-react";
@@ -111,7 +111,7 @@ export function SecurityAuditCard() {
                 className={cn(
                   "flex flex-col items-start p-2.5 rounded-xl border text-left transition-all cursor-pointer",
                   isSelected
-                    ? "border-orange-500/60 bg-orange-500/10 shadow-xs ring-1 ring-orange-500/20"
+                    ? "border-red-500/60 bg-red-500/10 shadow-xs ring-1 ring-red-500/20"
                     : "border-border/60 bg-muted/25 hover:bg-muted/50 hover:border-border"
                 )}
               >
@@ -146,7 +146,7 @@ export function SecurityAuditCard() {
             <button
               type="button"
               onClick={() => setSelectedFramework("all")}
-              className="text-orange-600 dark:text-orange-400 hover:underline cursor-pointer font-medium"
+              className="text-red-600 dark:text-red-400 hover:underline cursor-pointer font-medium"
             >
               Show all findings
             </button>
@@ -213,11 +213,11 @@ export function SecurityAuditCard() {
                 className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl border border-border/70 bg-card/60 hover:bg-card transition-colors text-xs shadow-xs"
               >
                 <div className="flex items-start gap-2.5 min-w-0 flex-1">
-                  <FileCheck className="h-4 w-4 shrink-0 text-orange-500 mt-0.5" />
+                  <FileCheck className="h-4 w-4 shrink-0 text-red-500 mt-0.5" />
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
                       <span className="font-semibold text-foreground">{cf.name}</span>
-                      <Badge variant="outline" className="rounded-full text-[9px] px-2 py-0 uppercase font-mono bg-orange-500/10 text-orange-600 border-orange-500/20">
+                      <Badge variant="outline" className="rounded-full text-[9px] px-2 py-0 uppercase font-mono bg-red-500/10 text-red-600 border-red-500/20">
                         {cf.severity}
                       </Badge>
                       {cf.frameworks.map((fw) => (
@@ -237,7 +237,7 @@ export function SecurityAuditCard() {
                     size="sm"
                     variant="outline"
                     onClick={() => handleFixCompliance(cf.fixAction)}
-                    className="shrink-0 h-7 rounded-full text-xs border-orange-500/30 text-orange-600 hover:bg-orange-500/10 dark:text-orange-400 font-medium"
+                    className="shrink-0 h-7 rounded-full text-xs border-red-500/30 text-red-600 hover:bg-red-500/10 dark:text-red-400 font-medium"
                   >
                     Enforce Rule
                   </Button>

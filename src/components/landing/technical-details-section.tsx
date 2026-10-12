@@ -1,4 +1,4 @@
-import { FileCode2, CheckCircle2, GitBranch, Terminal, Shield, Layers } from "lucide-react";
+﻿import { FileCode2, CheckCircle2, GitBranch, Terminal, Shield, Layers } from "lucide-react";
 import { LandingSection } from "./shared/landing-section";
 import { landingStyles } from "./shared/landing-styles";
 import { cn } from "@/lib/utils";
@@ -45,9 +45,9 @@ export function TechnicalDetailsSection() {
           { title: "AWS CDK TypeScript", icon: Terminal, items: CDK_OUTPUTS },
           { title: "CI/CD & Scripts", icon: GitBranch, items: CICD_TOOLING_OUTPUTS },
         ].map((block) => (
-          <div key={block.title} className="rounded-3xl border border-border/80 bg-card/85 p-5 shadow-xs transition-all hover:border-orange-500/40">
+          <div key={block.title} className="rounded-3xl border border-border/80 bg-card/85 p-5 shadow-xs transition-all hover:border-red-500/40">
             <div className="flex items-center gap-2.5 mb-3.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-500/10 text-red-600 dark:text-red-400">
                 <block.icon className="h-4 w-4" />
               </div>
               <h3 className="text-sm font-semibold text-foreground tracking-tight">{block.title}</h3>
@@ -55,7 +55,7 @@ export function TechnicalDetailsSection() {
             <ul className="space-y-2">
               {block.items.map((item) => (
                 <li key={item} className="flex items-start gap-2 text-xs">
-                  <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-orange-500" />
+                  <CheckCircle2 className="h-3.5 w-3.5 mt-0.5 shrink-0 text-red-500" />
                   <span className="font-mono text-muted-foreground leading-relaxed">{item}</span>
                 </li>
               ))}
@@ -66,7 +66,7 @@ export function TechnicalDetailsSection() {
 
       <div className={cn(landingStyles.codeBlock, "mt-4 max-w-6xl mx-auto p-4 rounded-3xl")}>
         <code className="text-xs leading-relaxed font-mono">
-          <span className="text-orange-400">$ </span>
+          <span className="text-red-400">$ </span>
           make plan && make apply
           <br />
           <span className="text-emerald-400">✓ Security Audit Passed (SOC 2, HIPAA, PCI-DSS compliant)</span>

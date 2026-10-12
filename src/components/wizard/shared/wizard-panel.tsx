@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+﻿import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { wizardStyles } from "./wizard-styles";
@@ -36,7 +36,7 @@ export function WizardPanel({
           <div className="min-w-0">
             {title && (
               <h3 className={wizardStyles.panelTitle}>
-                {Icon && <Icon className="h-4 w-4 text-orange-500 shrink-0" />}
+                {Icon && <Icon className="h-4 w-4 text-red-500 shrink-0" />}
                 <span className="truncate">{title}</span>
               </h3>
             )}

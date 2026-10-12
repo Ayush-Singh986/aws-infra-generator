@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+﻿import { cn } from "@/lib/utils";
 import { wizardStyles } from "@/components/wizard/shared/wizard-styles";
 
 export const landingStyles = {
@@ -12,39 +12,39 @@ export const landingStyles = {
   section: "relative scroll-mt-24 px-2 sm:px-0",
   sectionHeader: "text-center space-y-2.5 sm:space-y-3.5 mb-8 sm:mb-12 max-w-3xl mx-auto",
   eyebrow: cn(
-    "inline-flex items-center gap-2 rounded-full border border-orange-500/25",
-    "bg-gradient-to-r from-orange-500/10 via-amber-500/10 to-orange-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider",
-    "text-orange-600 dark:text-orange-400 shadow-xs"
+    "inline-flex items-center gap-2 rounded-full border border-red-500/25",
+    "bg-gradient-to-r from-red-500/10 via-red-400/10 to-red-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider",
+    "text-red-600 dark:text-red-400 shadow-xs"
   ),
   sectionTitle: "text-2xl sm:text-4xl font-bold tracking-tight text-foreground",
   sectionDesc: "text-sm sm:text-base text-muted-foreground leading-relaxed",
   iconBox: cn(
     "flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-2xl",
-    "border border-orange-500/20 bg-orange-500/10 text-orange-600 dark:text-orange-400 shadow-xs"
+    "border border-red-500/20 bg-red-500/10 text-red-600 dark:text-red-400 shadow-xs"
   ),
   card: cn(
     wizardStyles.panel,
-    "h-full p-4 sm:p-5 transition-all duration-200 hover:border-orange-500/35 hover:shadow-md"
+    "h-full p-4 sm:p-5 transition-all duration-200 hover:border-red-500/35 hover:shadow-md"
   ),
   cardAccent: cn(
     wizardStyles.panelAccent,
-    "h-full p-4 sm:p-5 transition-all duration-200 hover:shadow-md hover:border-orange-500/45"
+    "h-full p-4 sm:p-5 transition-all duration-200 hover:shadow-md hover:border-red-500/45"
   ),
   pill: cn(
     "inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-muted/40",
     "px-3 py-1.5 text-xs font-medium transition-colors hover:bg-muted/70"
   ),
   pillActive: cn(
-    "inline-flex items-center gap-1.5 rounded-full border border-orange-500/30",
-    "bg-orange-500 px-3 py-1.5 text-xs font-medium text-white shadow-xs"
+    "inline-flex items-center gap-1.5 rounded-full border border-red-500/30",
+    "bg-red-500 px-3 py-1.5 text-xs font-medium text-white shadow-xs"
   ),
   filterRail: wizardStyles.tabScrollRail,
   filterList: wizardStyles.tabScrollList,
   ctaPrimary: cn(
-    "rounded-full h-10 sm:h-11 px-6 bg-orange-500 hover:bg-orange-600 text-white font-medium shadow-xs hover:shadow-sm hover:scale-[1.02] transition-all cursor-pointer"
+    "rounded-full h-10 sm:h-11 px-6 bg-red-500 hover:bg-red-600 text-white font-medium shadow-xs hover:shadow-sm hover:scale-[1.02] transition-all cursor-pointer"
   ),
   heroGlow: cn(
     "pointer-events-none absolute -top-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full transform-gpu",
-    "bg-gradient-to-tr from-orange-500/15 via-amber-500/10 to-transparent blur-2xl dark:from-orange-500/10 dark:via-amber-500/5"
+    "bg-gradient-to-tr from-red-500/15 via-red-400/10 to-transparent blur-2xl dark:from-red-500/10 dark:via-red-400/5"
   ),
 };

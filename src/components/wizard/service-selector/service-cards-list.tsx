@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Star, AlertTriangle, CheckCircle2, Check } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -32,7 +32,7 @@ export function ServiceCardsList({
             return (
               <div key={category.id} className="space-y-2.5">
                 <div className="flex items-center gap-2 sticky top-0 bg-card/95 backdrop-blur-md py-1.5 z-10">
-                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500/10 text-orange-600 dark:text-orange-400">
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-red-500/10 text-red-600 dark:text-red-400">
                     {CategoryIcon && <CategoryIcon className="h-3 w-3" />}
                   </div>
                   <h3 className="text-xs sm:text-sm font-semibold tracking-tight">{category.label}</h3>
@@ -58,9 +58,9 @@ export function ServiceCardsList({
                         onClick={() => onToggleService(service.id)}
                         className={cn(
                           "group flex w-full items-start gap-3 rounded-2xl border p-3 text-left transition-all cursor-pointer",
-                          "hover:border-orange-500/40 hover:bg-orange-500/5 hover:shadow-xs",
+                          "hover:border-red-500/40 hover:bg-red-500/5 hover:shadow-xs",
                           isSelected
-                            ? "border-orange-500/60 bg-gradient-to-br from-orange-500/10 via-card to-card shadow-xs ring-1 ring-orange-500/30"
+                            ? "border-red-500/60 bg-gradient-to-br from-red-500/10 via-card to-card shadow-xs ring-1 ring-red-500/30"
                             : "border-border/70 bg-card/60"
                         )}
                       >
@@ -68,8 +68,8 @@ export function ServiceCardsList({
                           className={cn(
                             "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all",
                             isSelected
-                              ? "bg-orange-500 text-white shadow-xs"
-                              : "bg-muted/60 text-muted-foreground group-hover:bg-orange-500/15 group-hover:text-orange-600"
+                              ? "bg-red-500 text-white shadow-xs"
+                              : "bg-muted/60 text-muted-foreground group-hover:bg-red-500/15 group-hover:text-red-600"
                           )}
                         >
                           {Icon && <Icon className="h-4 w-4" />}
@@ -107,8 +107,8 @@ export function ServiceCardsList({
                           className={cn(
                             "h-5 w-5 shrink-0 mt-0.5 rounded-full border flex items-center justify-center transition-all",
                             isSelected
-                              ? "bg-orange-500 border-orange-500 text-white shadow-xs"
-                              : "border-border bg-background/80 group-hover:border-orange-500/60"
+                              ? "bg-red-500 border-red-500 text-white shadow-xs"
+                              : "border-border bg-background/80 group-hover:border-red-500/60"
                           )}
                         >
                           {isSelected && <Check className="h-3 w-3 stroke-[3]" />}

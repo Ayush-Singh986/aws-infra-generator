@@ -747,7 +747,7 @@ function ChatWindow({ onClose, thinking, messages, isLoading, error, input, setI
             <textarea ref={inputRef} value={input}
               onChange={e=>setInput(e.target.value)}
               onKeyDown={e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send(input);} }}
-              placeholder="Describe what you want to build…"
+              placeholder="Ask me anything — AWS, code, or any topic…"
               rows={1} disabled={isLoading}
               className="flex-1 resize-none rounded-xl border border-border/70 bg-muted/40 px-3 py-2 text-xs placeholder:text-muted-foreground focus:outline-none focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20 disabled:opacity-50 max-h-28 leading-relaxed transition-all"
               style={{ minHeight:36 }}
@@ -760,7 +760,7 @@ function ChatWindow({ onClose, thinking, messages, isLoading, error, input, setI
             </Button>
           </div>
           <p className="mt-1.5 text-center text-[10px] text-muted-foreground/50">
-            Powered by Google Gemini · Enter to send
+            Powered by Groq LLaMA · Enter to send · Shift+Enter for new line
           </p>
         </div>
       </>}
@@ -811,7 +811,7 @@ export function AiChat() {
 
   const reset = () => {
     setMessages([{ id:"r"+Date.now(), role:"assistant",
-      content:"Fresh start! 🚀 What are you building on AWS?", timestamp:new Date() }]);
+      content:"Fresh start! 🚀 Ask me anything!", timestamp:new Date() }]);
     setError(null); setInput("");
   };
 

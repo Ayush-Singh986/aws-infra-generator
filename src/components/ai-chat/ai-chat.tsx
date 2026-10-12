@@ -778,41 +778,75 @@ export function AiChat() {
   const [hasNew,    setHasNew]    = useState(false);
   const [messages,  setMessages]  = useState<Message[]>([{
     id:"welcome", role:"assistant",
-    content:"Hi! I'm ARIA — your AWS Astronaut Infrastructure Advisor 🚀\n\nDescribe what you want to build and I'll recommend the right services, explain the architecture, and warn about common mistakes.\n\nWhat are you building?",
+    content:"Hi! I am ARIA, your AI assistant! I can help you with anything:\n\n- AWS architecture and services\n- Coding questions\n- General knowledge\n- Anything else you want to know!\n\nWhat can I help you with today?",
     timestamp: new Date(),
   }]);
 
   const send = async (text: string) => {
     if (!text.trim() || isLoading) return;
     setError(null);
-    const userMsg: Message = { id:Date.now().toString(), role:"user", content:text.trim(), timestamp:new Date() };
+
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: text.trim(),
+      timestamp: new Date(),
+    };
     const next = [...messages, userMsg];
     setMessages(next);
     setInput("");
     setIsLoading(true);
+
+    // Add empty assistant message that fills as stream arrives
+    const aiId = (Date.now() + 1).toString();
+    setMessages(p => [...p, { id: aiId, role: "assistant", content: "", timestamp: new Date() }]);
+
     try {
-      const res  = await fetch("/api/ai-chat", {
-        method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ messages: next.map(m=>({role:m.role,content:m.content})) }),
+      const res = await fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ messages: next.map(m => ({ role: m.role, content: m.content })) }),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Request failed");
-      setMessages(p=>[...p,{
-        id:(Date.now()+1).toString(), role:"assistant",
-        content: data.content, timestamp:new Date(),
-      }]);
+
+      if (!res.ok) {
+        // Error response is always JSON
+        const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
+        throw new Error(errData.error || `Request failed (${res.status})`);
+      }
+
+      // Always read as stream regardless of content-type
+      if (!res.body) throw new Error("No response body");
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        accumulated += decoder.decode(value, { stream: true });
+        const final = accumulated;
+        setMessages(p => p.map(m => m.id === aiId ? { ...m, content: final } : m));
+      }
+
       if (!isOpen) setHasNew(true);
-    } catch(e) {
+    } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
+      setMessages(p => p.filter(m => m.id !== aiId));
     } finally {
       setIsLoading(false);
     }
   };
 
   const reset = () => {
-    setMessages([{ id:"r"+Date.now(), role:"assistant",
-      content:"Fresh start! 🚀 Ask me anything!", timestamp:new Date() }]);
-    setError(null); setInput("");
+    setMessages([{
+      id: "r" + Date.now(),
+      role: "assistant",
+      content: "Fresh start! Ask me anything!",
+      timestamp: new Date(),
+    }]);
+    setError(null);
+    setInput("");
   };
 
   return (
@@ -824,7 +858,7 @@ export function AiChat() {
       />
       {isOpen && (
         <ChatWindow
-          onClose={()=>setIsOpen(false)}
+          onClose={() => setIsOpen(false)}
           thinking={isLoading} messages={messages}
           isLoading={isLoading} error={error}
           input={input} setInput={setInput}

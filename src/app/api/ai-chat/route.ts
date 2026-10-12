@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+﻿import { GoogleGenAI } from "@google/genai";
 import { NextRequest, NextResponse } from "next/server";
 
 const SYSTEM_PROMPT = `You are an expert AWS Infrastructure Advisor built into the AWS Infra Generator tool. Your job is to help developers design the right AWS architecture for their use case.
@@ -18,7 +18,7 @@ When a user describes what they want to build:
 
 Be concise but thorough. Use bullet points. Format service names in backticks like \`EC2\`, \`RDS\`, \`S3\`.`;
 
-// Model fallback chain — tries each model in order until one works
+// Model fallback chain â€” tries each model in order until one works
 const MODEL_FALLBACKS = [
   "gemini-3.8-flash",
   "gemini-3.5-flash",
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
 
     const ai = new GoogleGenAI({ apiKey });
 
-    // Build history — skip leading assistant messages (Gemini requires user first)
+    // Build history â€” skip leading assistant messages (Gemini requires user first)
     const allExceptLast = messages.slice(0, -1);
     let startIdx = 0;
     while (
@@ -122,7 +122,7 @@ export async function POST(req: NextRequest) {
           msg.includes("503") ||
           msg.includes("UNAVAILABLE") ||
           msg.includes("high demand");
-        if (!tryNext) throw e; // auth error, bad request etc — fail immediately
+        if (!tryNext) throw e; // auth error, bad request etc â€” fail immediately
         console.warn(`Model ${model} unavailable/overloaded, trying next...`);
       }
     }
@@ -141,3 +141,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

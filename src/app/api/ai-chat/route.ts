@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest, NextResponse } from "next/server";
 
 const SYSTEM_PROMPT = `You are ARIA, a friendly and highly intelligent AI assistant.
 

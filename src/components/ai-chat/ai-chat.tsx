@@ -664,7 +664,7 @@ function ChatWindow({ onClose, thinking, messages, isLoading, error, input, setI
             <span className="text-sm font-bold text-white tracking-tight">ARIA</span>
             <span className="inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold text-white/90"
               style={{ background:"rgba(255,255,255,.2)" }}>
-              <Sparkles className="h-2 w-2"/> Gemini
+              <Sparkles className="h-2 w-2"/>               Groq
             </span>
           </div>
           <span className="text-[11px] text-white/70 leading-none">
@@ -716,8 +716,8 @@ function ChatWindow({ onClose, thinking, messages, isLoading, error, input, setI
               <div className="text-xs text-destructive">
                 <p className="font-medium">Error</p>
                 <p className="mt-0.5 text-destructive/80">{error}</p>
-                {error.includes("GEMINI_API_KEY") && (
-                  <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer"
+                {error.includes("GROQ_API_KEY") && (
+                  <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer"
                     className="mt-1 block font-medium underline">Get your free API key →</a>
                 )}
               </div>
@@ -777,10 +777,24 @@ export function AiChat() {
   const [minimized, setMinimized] = useState(false);
   const [hasNew,    setHasNew]    = useState(false);
   const [messages,  setMessages]  = useState<Message[]>([{
-    id:"welcome", role:"assistant",
-    content:"Hi! I am ARIA, your AI assistant! I can help you with anything:\n\n- AWS architecture and services\n- Coding questions\n- General knowledge\n- Anything else you want to know!\n\nWhat can I help you with today?",
+    id: "welcome",
+    role: "assistant",
+    content: "Hi! I am ARIA your AI assistant! Ask me anything:\n\n- AWS architecture and cloud services\n- Coding help in any language\n- General knowledge\n- Career advice\n- Or literally anything else!\n\nWhat can I help you with?",
     timestamp: new Date(),
   }]);
+
+  // typewriter: streams text character by character after receiving full response
+  const typeWriter = useCallback((aiId: string, fullText: string) => {
+    let i = 0;
+    const speed = Math.max(8, Math.min(25, Math.floor(5000 / fullText.length)));
+    const tick = () => {
+      i++;
+      const slice = fullText.slice(0, i);
+      setMessages(p => p.map(m => m.id === aiId ? { ...m, content: slice } : m));
+      if (i < fullText.length) setTimeout(tick, speed);
+    };
+    tick();
+  }, []);
 
   const send = async (text: string) => {
     if (!text.trim() || isLoading) return;
@@ -797,43 +811,35 @@ export function AiChat() {
     setInput("");
     setIsLoading(true);
 
-    // Add empty assistant message that fills as stream arrives
     const aiId = (Date.now() + 1).toString();
+    // Show a placeholder while loading
     setMessages(p => [...p, { id: aiId, role: "assistant", content: "", timestamp: new Date() }]);
 
     try {
       const res = await fetch("/api/ai-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next.map(m => ({ role: m.role, content: m.content })) }),
+        body: JSON.stringify({
+          messages: next.map(m => ({ role: m.role, content: m.content })),
+        }),
       });
 
-      if (!res.ok) {
-        // Error response is always JSON
-        const errData = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));
-        throw new Error(errData.error || `Request failed (${res.status})`);
+      const data = await res.json();
+
+      if (!res.ok || data.error) {
+        throw new Error(data.error || `Request failed (${res.status})`);
       }
 
-      // Always read as stream regardless of content-type
-      if (!res.body) throw new Error("No response body");
+      const fullText: string = data.content ?? "";
+      setIsLoading(false);
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let accumulated = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        accumulated += decoder.decode(value, { stream: true });
-        const final = accumulated;
-        setMessages(p => p.map(m => m.id === aiId ? { ...m, content: final } : m));
-      }
+      // Start typewriter effect
+      typeWriter(aiId, fullText);
 
       if (!isOpen) setHasNew(true);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Something went wrong");
       setMessages(p => p.filter(m => m.id !== aiId));
-    } finally {
       setIsLoading(false);
     }
   };
@@ -842,7 +848,7 @@ export function AiChat() {
     setMessages([{
       id: "r" + Date.now(),
       role: "assistant",
-      content: "Fresh start! Ask me anything!",
+      content: "Fresh start! Ask me anything at all!",
       timestamp: new Date(),
     }]);
     setError(null);

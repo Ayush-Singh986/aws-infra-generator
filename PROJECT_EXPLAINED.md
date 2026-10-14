@@ -181,7 +181,7 @@ Why this matters:
 │                                                      │
 │  ┌─────────────────────────────────────────────┐   │
 │  │   AI Chat (ARIA)                             │   │
-│  │   Talks to Google Gemini API (server-side)  │   │
+│  │   Talks to Groq API (server-side)           │   │
 │  │   Advises on architecture decisions          │   │
 │  └─────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────┘
@@ -270,7 +270,7 @@ The security auditor flags dangerous configurations — like SSH open to the ent
 
 5. **Developer experience design** — Building a tool that guides non-experts to correct decisions, with helpful error messages and auto-completion of complex concepts
 
-6. **AI integration** — Connecting Google Gemini as a context-aware assistant that understands the specific domain of AWS architecture
+6. **AI integration** — Connecting a server-side Groq API chat assistant to help with AWS architecture questions
 
 ---
 
@@ -282,7 +282,7 @@ The security auditor flags dangerous configurations — like SSH open to the ent
 >
 > My tool is a 4-step visual wizard — you pick the AWS services you need, fill a simple configuration form, and it generates production-ready Terraform files. You download them, run three commands in your terminal, and your cloud infrastructure is live.
 >
-> What makes it interesting technically: the entire code generator runs in the browser — no backend server, no data sent anywhere. I also built an automatic dependency resolver so if you pick EC2, it auto-adds VPC. There's a live cost estimator, a security auditor, and an AI chatbot called ARIA that advises on architecture decisions using Google Gemini.
+> What makes it interesting technically: the infrastructure generator runs in the browser, and a small Next.js API route handles AI chat requests. I also built an automatic dependency resolver so if you pick EC2, it auto-adds VPC. There is an approximate cost estimator, a configuration-based security auditor, and an AI chatbot called ARIA powered by Groq.
 >
 > It supports Terraform, CloudFormation, and AWS CDK output formats and covers 32+ AWS services."
 

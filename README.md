@@ -43,12 +43,12 @@ cd aws-infra-generator
 npm install
 ```
 
-**Optional — Enable the AI Infrastructure Advisor chatbot:**
+**Optional — Enable the AI Infrastructure Advisor chatbot** (the rest of the app works without an API key):
 
-1. Get a **free** Gemini API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey) (no credit card required)
+1. Get a Groq API key at [console.groq.com/keys](https://console.groq.com/keys)
 2. Create a `.env.local` file in the project root:
 ```bash
-GEMINI_API_KEY=your_gemini_api_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 Then start the dev server:
@@ -58,7 +58,7 @@ npm run dev
 
 Open **http://localhost:3000** in your browser.
 
-> Without the API key the app works fully — the AI chat button will show an error message if clicked. Everything else works without any key.
+> Without the key, the AI chat advisor is unavailable. The infrastructure wizard and code generation still work.
 
 ### 2. Follow the wizard
 
@@ -111,8 +111,8 @@ See **monthly and yearly** cost projections with per-service breakdowns before y
 ### 📊 Live infrastructure diagram
 Interactive architecture view with service relationships, categories, and SVG export for docs and presentations.
 
-### 🔍 Real Terraform plan preview
-Plan output is **parsed from your actual generated `.tf` files** — see which resources will be created and key attributes before you download.
+### 🔍 Terraform resource preview
+The app reads generated `.tf` files locally and estimates which resources would be created. This is a preview, not a live `terraform plan` and it does not contact AWS.
 
 ### ✅ Validation before generation
 Dependency checks, config validation, and warnings — so you fix issues **before** generating code.
@@ -133,7 +133,7 @@ Wizard progress is saved locally — refresh the page and pick up where you left
 
 ## 🤖 AI Infrastructure Advisor
 
-The AI chatbot is a built-in AWS architecture expert powered by **Google Gemini**. It lives in the bottom-right corner of every page as a floating chat button.
+The AI chatbot is an architecture helper powered by **Groq** (Llama 3.3 70B Versatile). It lives in the bottom-right corner of every page as a floating chat button. It requires a `GROQ_API_KEY`; the rest of the app works without one.
 
 ### What it does
 
@@ -168,24 +168,17 @@ Describe what you want to build in plain English and the advisor will:
 
 ### Setup (5 minutes, free)
 
-**Step 1 — Get a Gemini API key**
+**Step 1 — Get a Groq API key**
 
-1. Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
-2. Sign in with your Google account
-3. Click **"Create API key"**
-4. Copy the key
-
-No credit card required. Free tier limits:
-- 15 requests per minute
-- 1 million tokens per day
-- Completely free
+1. Go to [console.groq.com/keys](https://console.groq.com/keys)
+2. Create and copy an API key
 
 **Step 2 — Add the key to your project**
 
 Create a `.env.local` file in the project root (next to `package.json`):
 
 ```bash
-GEMINI_API_KEY=AIzaSy...your_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
 
 **Step 3 — Restart the dev server**
@@ -204,18 +197,18 @@ The chat button in the bottom-right corner will now be fully active.
 
 1. Go to your project on [vercel.com](https://vercel.com)
 2. Click **Settings → Environment Variables**
-3. Add: `GEMINI_API_KEY` = your key
+3. Add: `GROQ_API_KEY` = your key
 4. Redeploy
 
 **On Ubuntu server:**
 
 ```bash
 # Add to your environment before running npm start
-export GEMINI_API_KEY=your_key_here
+export GROQ_API_KEY=your_key_here
 npm start
 
 # Or add it to a .env.local file on the server
-echo "GEMINI_API_KEY=your_key_here" > .env.local
+echo "GROQ_API_KEY=your_key_here" > .env.local
 npm run build
 npm start
 ```
@@ -224,15 +217,15 @@ npm start
 
 ### How it works (technical)
 
-The chatbot uses a **Next.js API route** (`/api/ai-chat`) as a secure server-side proxy. Your Gemini API key never reaches the browser — all requests go through the server.
+The chatbot uses a **Next.js API route** (`/api/ai-chat`) as a server-side proxy. Your Groq API key stays on the server; chat messages are sent to Groq to generate responses.
 
 ```
-Browser → POST /api/ai-chat → Google Gemini API → Response → Browser
+Browser → POST /api/ai-chat → Groq API → Response → Browser
 ```
 
-The AI is given a system prompt that makes it behave specifically as an AWS architecture expert, with knowledge of all 32+ services in the wizard. It maintains full conversation history so follow-up questions work naturally.
+The API sends the conversation history to Groq using the Llama 3.3 70B Versatile model. Responses are returned as JSON and displayed with a typing animation.
 
-**Model used:** `gemini-1.5-flash` — fast, accurate, and free tier friendly.
+**Model used:** `llama-3.3-70b-versatile`.
 
 ---
 
@@ -242,7 +235,7 @@ The AI is given a system prompt that makes it behave specifically as an AWS arch
 
 1. Go to [vercel.com](https://vercel.com) and sign in with GitHub
 2. Click **Add New Project** → import `aws-infra-generator`
-3. Add environment variable: `GEMINI_API_KEY` = your key
+3. Add environment variable: `GROQ_API_KEY` = your key
 4. Click **Deploy**
 
 Every `git push` to `main` auto-deploys. You get HTTPS, CDN, and a live URL instantly.
@@ -258,8 +251,8 @@ git checkout -- package-lock.json  # if there are conflicts
 npm install
 npm run build
 
-# Add your Gemini key
-echo "GEMINI_API_KEY=your_key_here" > .env.local
+# Add your Groq key
+echo "GROQ_API_KEY=your_key_here" > .env.local
 
 # Start production server
 npm start

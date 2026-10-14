@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { ArrowRight, Github, Sparkles, Terminal, Zap, Shield, DollarSign, Layers } from "lucide-react";
+import { ArrowRight, Github, Sparkles, Terminal, Zap, Shield, DollarSign, Layers, Cloud, Database, Server, Network, Cpu, HardDrive, Globe } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { landingStyles } from "./shared/landing-styles";
 import { HERO_STATS } from "./landing-data";
@@ -22,17 +22,30 @@ resource "aws_vpc" "main" {
   tags       = local.common_tags
 }`;
 
-const FLOATING_ICONS = [
-  { icon: Zap, delay: "0s", x: "10%", y: "20%" },
-  { icon: Shield, delay: "0.5s", x: "85%", y: "15%" },
-  { icon: DollarSign, delay: "1s", x: "75%", y: "70%" },
-  { icon: Layers, delay: "1.5s", x: "5%", y: "65%" },
+// 3D floating AWS service icons
+const FLOATING_SERVICES = [
+  { icon: Server, label: "EC2", color: "#FF9900", delay: "0s", x: "8%", y: "25%", size: 40 },
+  { icon: Database, label: "RDS", color: "#3B82F6", delay: "0.5s", x: "88%", y: "20%", size: 36 },
+  { icon: HardDrive, label: "S3", color: "#22C55E", delay: "1s", x: "82%", y: "72%", size: 38 },
+  { icon: Network, label: "VPC", color: "#8B5CF6", delay: "1.5s", x: "5%", y: "70%", size: 34 },
+  { icon: Cpu, label: "Lambda", color: "#EC4899", delay: "0.3s", x: "92%", y: "45%", size: 32 },
+  { icon: Globe, label: "CloudFront", color: "#06B6D4", delay: "0.8s", x: "3%", y: "48%", size: 36 },
 ];
+
+// Animated particles
+const PARTICLES = Array.from({ length: 20 }, (_, i) => ({
+  delay: `${Math.random() * 5}s`,
+  duration: `${3 + Math.random() * 4}s`,
+  x: `${Math.random() * 100}%`,
+  size: 2 + Math.random() * 4,
+}));
 
 export function LandingHero({ onGetStarted }: LandingHeroProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => setMounted(true), []);
   useEffect(() => {
@@ -40,55 +53,126 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  const logoSrc =
-    mounted && resolvedTheme === "dark" ? "/AWS-Dark.svg" : "/AWS-Light.svg";
+  // Parallax effect on mouse move
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      setMousePos({ x, y });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const logoSrc = mounted && resolvedTheme === "dark" ? "/AWS-Dark.svg" : "/AWS-Light.svg";
 
   return (
-    <section className="relative overflow-hidden px-2 sm:px-0 pt-4 sm:pt-8">
-      {/* Animated background gradient */}
-      <div className={landingStyles.heroGlow} />
+    <section ref={heroRef} className="relative overflow-hidden px-2 sm:px-0 pt-4 sm:pt-8 min-h-[600px]">
+      {/* Animated gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 via-transparent to-orange-500/5 dark:from-red-500/10 dark:to-orange-500/5" />
       
-      {/* Floating icons */}
+      {/* Floating particles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {FLOATING_ICONS.map((item, i) => (
+        {PARTICLES.map((p, i) => (
           <div
             key={i}
-            className="absolute animate-float opacity-20 dark:opacity-10"
-            style={{ 
-              left: item.x, 
-              top: item.y, 
-              animationDelay: item.delay 
+            className="absolute rounded-full bg-red-500/30 dark:bg-red-400/20"
+            style={{
+              left: p.x,
+              width: p.size,
+              height: p.size,
+              animation: `float ${p.duration} ease-in-out infinite`,
+              animationDelay: p.delay,
+              bottom: "-20px",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* 3D Floating AWS Service Icons */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {FLOATING_SERVICES.map((service, i) => (
+          <div
+            key={i}
+            className="absolute group cursor-pointer"
+            style={{
+              left: service.x,
+              top: service.y,
+              transform: `translate(-50%, -50%) 
+                         translateX(${mousePos.x * (20 + i * 5)}px) 
+                         translateY(${mousePos.y * (20 + i * 5)}px)
+                         perspective(1000px) rotateY(${mousePos.x * 10}deg) rotateX(${-mousePos.y * 10}deg)`,
+              transition: 'transform 0.1s ease-out',
             }}
           >
-            <item.icon className="h-8 w-8 text-red-500" />
+            <div 
+              className="relative animate-float"
+              style={{ 
+                animationDelay: service.delay,
+              }}
+            >
+              {/* Glow effect */}
+              <div 
+                className="absolute inset-0 blur-xl opacity-50 group-hover:opacity-80 transition-opacity"
+                style={{ backgroundColor: service.color }}
+              />
+              {/* Icon container */}
+              <div 
+                className="relative flex items-center justify-center rounded-2xl shadow-2xl border border-white/20 backdrop-blur-sm p-3 group-hover:scale-110 transition-transform duration-300"
+                style={{ 
+                  backgroundColor: `${service.color}20`,
+                  boxShadow: `0 8px 32px ${service.color}40`,
+                }}
+              >
+                <service.icon 
+                  className="h-6 w-6 sm:h-8 sm:w-8" 
+                  style={{ color: service.color }}
+                />
+              </div>
+              {/* Label tooltip */}
+              <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                <span className="text-xs font-semibold bg-card/90 backdrop-blur px-2 py-1 rounded-lg shadow-lg">
+                  {service.label}
+                </span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-10">
+      {/* Main content */}
+      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-10 relative z-10">
         <div className={cn(
           "space-y-5 sm:space-y-6 text-center lg:text-left transition-all duration-700",
           isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
         )}>
           <div className="flex justify-center lg:justify-start">
-            <span className={cn(landingStyles.eyebrow, "animate-pulse-glow")}>
+            <span className={cn(landingStyles.eyebrow, "animate-pulse-glow relative overflow-hidden")}>
               <Sparkles className="h-3.5 w-3.5 animate-bounce-subtle" />
               Cloud Architecture Studio 2.0
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" />
             </span>
           </div>
 
           <div className="flex justify-center lg:justify-start">
-            <div className="inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-card/85 p-3.5 shadow-xs backdrop-blur-xl hover:border-red-500/40 hover:shadow-lg transition-all duration-300 hover-lift">
-              <img
-                src={logoSrc}
-                alt="AWS Logo"
-                className="h-10 w-auto sm:h-12"
-                suppressHydrationWarning
-              />
+            <div className="relative group">
+              {/* 3D rotating ring */}
+              <div className="absolute inset-0 rounded-3xl border-2 border-red-500/30 animate-rotate-slow" 
+                   style={{ transform: 'scale(1.2)', borderStyle: 'dashed' }} />
+              <div className="inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-card/85 p-4 shadow-xl backdrop-blur-xl hover:border-red-500/40 hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
+                <img
+                  src={logoSrc}
+                  alt="AWS Logo"
+                  className="h-12 w-auto sm:h-14"
+                  suppressHydrationWarning
+                />
+              </div>
             </div>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.12]">
             Design AWS infrastructure.
             <span className="block gradient-text-animated">
               Generate IaC in seconds.
@@ -103,12 +187,13 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
             <Button
               size="lg"
               onClick={onGetStarted}
-              className={cn("w-full sm:w-auto text-sm gap-2 btn-pulse", landingStyles.ctaPrimary)}
+              className={cn("w-full sm:w-auto text-sm gap-2 btn-pulse relative overflow-hidden group", landingStyles.ctaPrimary)}
               id="get-started"
             >
-              <Sparkles className="h-4 w-4" />
-              Launch Studio
-              <ArrowRight className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 relative z-10" />
+              <span className="relative z-10">Launch Studio</span>
+              <ArrowRight className="h-4 w-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-600 to-red-500 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Button>
             <a
               href="https://github.com/Ayush-Singh986/aws-infra-generator"
@@ -116,61 +201,83 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
               rel="noopener noreferrer"
               className="w-full sm:w-auto"
             >
-              <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full text-sm h-10 sm:h-11 px-5 border-border/70 hover:bg-muted/60 hover:border-red-500/30 transition-all duration-300 hover-lift">
-                <Github className="mr-2 h-4 w-4" />
-                GitHub Repository
+              <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full text-sm h-10 sm:h-11 px-5 border-border/70 hover:bg-red-500/10 hover:border-red-500/50 transition-all duration-300 hover-lift group">
+                <Github className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform" />
+                <span>GitHub Repository</span>
               </Button>
             </a>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl mx-auto lg:mx-0 pt-2">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto lg:mx-0 pt-3">
             {HERO_STATS.map((stat, i) => (
               <div 
                 key={stat.label} 
                 className={cn(
-                  landingStyles.statChip, 
-                  "p-3 rounded-2xl bg-card/60 card-interactive",
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                  "relative p-4 rounded-2xl bg-gradient-to-br from-card/80 to-card/40 backdrop-blur-sm border border-border/50 overflow-hidden group cursor-default transition-all duration-500",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4",
+                  "hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/10"
                 )}
                 style={{ transitionDelay: `${i * 100 + 300}ms` }}
               >
-                <span className={cn(landingStyles.statValue, "text-red-600 dark:text-red-400 text-lg sm:text-2xl")}>
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                <span className={cn(landingStyles.statValue, "text-red-600 dark:text-red-400 text-xl sm:text-2xl font-bold relative z-10 block")}>
                   {stat.value}
                 </span>
-                <span className={landingStyles.statLabel}>{stat.label}</span>
+                <span className={cn(landingStyles.statLabel, "relative z-10")}>{stat.label}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div className={cn(
-          landingStyles.panelAccent, 
-          "relative overflow-hidden p-0 rounded-3xl shadow-sm border-red-500/25 transition-all duration-700",
-          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-        )}
-        style={{ transitionDelay: "200ms" }}>
-          {/* Animated border glow */}
-          <div className="absolute inset-0 rounded-3xl animate-border-pulse pointer-events-none" />
+        {/* 3D Code Preview Card */}
+        <div 
+          className={cn(
+            "relative transition-all duration-700",
+            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+          )}
+          style={{ 
+            transitionDelay: "200ms",
+            transform: `perspective(1000px) rotateY(${mousePos.x * -5}deg) rotateX(${mousePos.y * 5}deg)`,
+          }}
+        >
+          {/* Glowing border */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 rounded-3xl blur-lg opacity-30 animate-pulse" />
           
-          <div className="flex items-center gap-2 border-b border-border/50 bg-muted/40 px-4 py-3">
-            <div className="flex items-center gap-1.5 mr-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 animate-pulse" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80 animate-pulse" style={{ animationDelay: "0.2s" }} />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80 animate-pulse" style={{ animationDelay: "0.4s" }} />
+          <div className={cn(landingStyles.panelAccent, "relative overflow-hidden p-0 rounded-3xl shadow-2xl border-red-500/25 backdrop-blur-xl")}>
+            {/* Floating clouds decoration */}
+            <div className="absolute -top-4 -right-4 opacity-20">
+              <Cloud className="h-16 w-16 text-red-500 animate-float" />
             </div>
-            <Terminal className="h-3.5 w-3.5 text-red-500" />
-            <span className="text-xs font-medium text-muted-foreground font-mono">
-              main.tf — live preview
-            </span>
-            <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 animate-pulse">
-              ● validated
-            </span>
+            <div className="absolute -bottom-4 -left-4 opacity-10">
+              <Cloud className="h-12 w-12 text-red-500 animate-float" style={{ animationDelay: "1s" }} />
+            </div>
+            
+            <div className="flex items-center gap-2 border-b border-border/50 bg-gradient-to-r from-muted/60 to-muted/40 px-4 py-3">
+              <div className="flex items-center gap-1.5 mr-2">
+                <span className="h-3 w-3 rounded-full bg-red-500/80 animate-pulse shadow-lg shadow-red-500/50" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80 animate-pulse shadow-lg shadow-amber-500/50" style={{ animationDelay: "0.2s" }} />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80 animate-pulse shadow-lg shadow-emerald-500/50" style={{ animationDelay: "0.4s" }} />
+              </div>
+              <Terminal className="h-3.5 w-3.5 text-red-500" />
+              <span className="text-xs font-medium text-muted-foreground font-mono">
+                main.tf — live preview
+              </span>
+              <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+                validated
+              </span>
+            </div>
+            <pre className={cn(landingStyles.codeBlock, "rounded-none border-0 h-[240px] sm:h-[320px] bg-zinc-950 p-4 relative overflow-hidden")}>
+              <code className="block text-xs font-mono leading-relaxed whitespace-pre-wrap text-zinc-200">{HERO_CODE}</code>
+              {/* Animated scan line */}
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute inset-0 bg-gradient-to-b from-red-500/5 via-transparent to-transparent animate-shimmer" />
+              </div>
+              {/* Glowing cursor */}
+              <div className="absolute bottom-4 right-4 w-2 h-4 bg-red-500 animate-pulse shadow-lg shadow-red-500/50" />
+            </pre>
           </div>
-          <pre className={cn(landingStyles.codeBlock, "rounded-none border-0 h-[240px] sm:h-[300px] bg-zinc-950 p-4 relative")}>
-            <code className="block text-xs font-mono leading-relaxed whitespace-pre-wrap text-zinc-200">{HERO_CODE}</code>
-            {/* Subtle scan line effect */}
-            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-transparent animate-shimmer" />
-          </pre>
         </div>
       </div>
     </section>

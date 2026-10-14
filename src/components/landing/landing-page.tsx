@@ -1,9 +1,10 @@
-"use client";
+﻿"use client";
 
 import { PresetTemplates } from "@/components/wizard/preset-templates";
 import { LandingHero } from "./landing-hero";
 import { FeaturesSection } from "./features-section";
 import { HowItWorksSection } from "./how-it-works-section";
+import { Services3DSection } from "./services-3d-section";
 import { EnvironmentsSection } from "./environments-section";
 import { UseCasesSection } from "./use-cases-section";
 import { BenefitsSection } from "./benefits-section";
@@ -23,6 +24,7 @@ export function LandingPage({ onGetStarted, onTemplateSelect }: LandingPageProps
     <div className={landingStyles.page}>
       <LandingHero onGetStarted={onGetStarted} />
       <FeaturesSection />
+      <Services3DSection />
       <HowItWorksSection />
       <EnvironmentsSection />
       <section id="templates" className={landingStyles.section}>

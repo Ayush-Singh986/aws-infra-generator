@@ -133,7 +133,7 @@ Wizard progress is saved locally — refresh the page and pick up where you left
 
 ## 🤖 AI Infrastructure Advisor
 
-The AI chatbot is an architecture helper powered by **Groq** (Llama 3.3 70B Versatile). It lives in the bottom-right corner of every page as a floating chat button. It requires a `GROQ_API_KEY`; the rest of the app works without one.
+The AI chatbot is an architecture helper powered by **Groq** (Qwen 3.8 27B). It lives in the bottom-right corner of every page as a floating chat button. It requires a `GROQ_API_KEY`; the rest of the app works without one.
 
 ### What it does
 
@@ -223,9 +223,9 @@ The chatbot uses a **Next.js API route** (`/api/ai-chat`) as a server-side proxy
 Browser → POST /api/ai-chat → Groq API → Response → Browser
 ```
 
-The API sends the conversation history to Groq using the Llama 3.3 70B Versatile model. Responses are returned as JSON and displayed with a typing animation.
+The API sends the conversation history to Groq using the Qwen 3.8 27B model. Responses are returned as JSON and displayed with a typing animation.
 
-**Model used:** `llama-3.3-70b-versatile`.
+**Model used:** `qwen/qwen3.8-27b`.
 
 ---
 

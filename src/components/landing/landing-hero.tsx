@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { ArrowRight, Github, Sparkles, Terminal } from "lucide-react";
+import { ArrowRight, Github, Sparkles, Terminal, Zap, Shield, DollarSign, Layers } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -22,30 +22,63 @@ resource "aws_vpc" "main" {
   tags       = local.common_tags
 }`;
 
+const FLOATING_ICONS = [
+  { icon: Zap, delay: "0s", x: "10%", y: "20%" },
+  { icon: Shield, delay: "0.5s", x: "85%", y: "15%" },
+  { icon: DollarSign, delay: "1s", x: "75%", y: "70%" },
+  { icon: Layers, delay: "1.5s", x: "5%", y: "65%" },
+];
+
 export function LandingHero({ onGetStarted }: LandingHeroProps) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const logoSrc =
     mounted && resolvedTheme === "dark" ? "/AWS-Dark.svg" : "/AWS-Light.svg";
 
   return (
     <section className="relative overflow-hidden px-2 sm:px-0 pt-4 sm:pt-8">
+      {/* Animated background gradient */}
       <div className={landingStyles.heroGlow} />
+      
+      {/* Floating icons */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {FLOATING_ICONS.map((item, i) => (
+          <div
+            key={i}
+            className="absolute animate-float opacity-20 dark:opacity-10"
+            style={{ 
+              left: item.x, 
+              top: item.y, 
+              animationDelay: item.delay 
+            }}
+          >
+            <item.icon className="h-8 w-8 text-red-500" />
+          </div>
+        ))}
+      </div>
 
       <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-10">
-        <div className="space-y-5 sm:space-y-6 text-center lg:text-left">
+        <div className={cn(
+          "space-y-5 sm:space-y-6 text-center lg:text-left transition-all duration-700",
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+        )}>
           <div className="flex justify-center lg:justify-start">
-            <span className={landingStyles.eyebrow}>
-              <Sparkles className="h-3.5 w-3.5" />
+            <span className={cn(landingStyles.eyebrow, "animate-pulse-glow")}>
+              <Sparkles className="h-3.5 w-3.5 animate-bounce-subtle" />
               Cloud Architecture Studio 2.0
             </span>
           </div>
 
           <div className="flex justify-center lg:justify-start">
-            <div className="inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-card/85 p-3.5 shadow-xs backdrop-blur-xl hover:border-red-500/35 transition-colors">
+            <div className="inline-flex items-center justify-center rounded-2xl border border-red-500/20 bg-card/85 p-3.5 shadow-xs backdrop-blur-xl hover:border-red-500/40 hover:shadow-lg transition-all duration-300 hover-lift">
               <img
                 src={logoSrc}
                 alt="AWS Logo"
@@ -57,7 +90,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
 
           <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-[1.12]">
             Design AWS infrastructure.
-            <span className="block bg-gradient-to-r from-red-600 via-red-400 to-red-500 bg-clip-text text-transparent">
+            <span className="block gradient-text-animated">
               Generate IaC in seconds.
             </span>
           </h1>
@@ -70,7 +103,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
             <Button
               size="lg"
               onClick={onGetStarted}
-              className={cn("w-full sm:w-auto text-sm gap-2", landingStyles.ctaPrimary)}
+              className={cn("w-full sm:w-auto text-sm gap-2 btn-pulse", landingStyles.ctaPrimary)}
               id="get-started"
             >
               <Sparkles className="h-4 w-4" />
@@ -83,7 +116,7 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
               rel="noopener noreferrer"
               className="w-full sm:w-auto"
             >
-              <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full text-sm h-10 sm:h-11 px-5 border-border/70 hover:bg-muted/60">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto rounded-full text-sm h-10 sm:h-11 px-5 border-border/70 hover:bg-muted/60 hover:border-red-500/30 transition-all duration-300 hover-lift">
                 <Github className="mr-2 h-4 w-4" />
                 GitHub Repository
               </Button>
@@ -91,8 +124,16 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-xl mx-auto lg:mx-0 pt-2">
-            {HERO_STATS.map((stat) => (
-              <div key={stat.label} className={cn(landingStyles.statChip, "p-3 rounded-2xl bg-card/60")}>
+            {HERO_STATS.map((stat, i) => (
+              <div 
+                key={stat.label} 
+                className={cn(
+                  landingStyles.statChip, 
+                  "p-3 rounded-2xl bg-card/60 card-interactive",
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                )}
+                style={{ transitionDelay: `${i * 100 + 300}ms` }}
+              >
                 <span className={cn(landingStyles.statValue, "text-red-600 dark:text-red-400 text-lg sm:text-2xl")}>
                   {stat.value}
                 </span>
@@ -102,23 +143,33 @@ export function LandingHero({ onGetStarted }: LandingHeroProps) {
           </div>
         </div>
 
-        <div className={cn(landingStyles.panelAccent, "relative overflow-hidden p-0 rounded-3xl shadow-sm border-red-500/25")}>
+        <div className={cn(
+          landingStyles.panelAccent, 
+          "relative overflow-hidden p-0 rounded-3xl shadow-sm border-red-500/25 transition-all duration-700",
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+        )}
+        style={{ transitionDelay: "200ms" }}>
+          {/* Animated border glow */}
+          <div className="absolute inset-0 rounded-3xl animate-border-pulse pointer-events-none" />
+          
           <div className="flex items-center gap-2 border-b border-border/50 bg-muted/40 px-4 py-3">
             <div className="flex items-center gap-1.5 mr-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
+              <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 animate-pulse" />
+              <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80 animate-pulse" style={{ animationDelay: "0.2s" }} />
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80 animate-pulse" style={{ animationDelay: "0.4s" }} />
             </div>
             <Terminal className="h-3.5 w-3.5 text-red-500" />
             <span className="text-xs font-medium text-muted-foreground font-mono">
               main.tf — live preview
             </span>
-            <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400">
+            <span className="ml-auto rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 animate-pulse">
               ● validated
             </span>
           </div>
-          <pre className={cn(landingStyles.codeBlock, "rounded-none border-0 h-[240px] sm:h-[300px] bg-zinc-950 p-4")}>
+          <pre className={cn(landingStyles.codeBlock, "rounded-none border-0 h-[240px] sm:h-[300px] bg-zinc-950 p-4 relative")}>
             <code className="block text-xs font-mono leading-relaxed whitespace-pre-wrap text-zinc-200">{HERO_CODE}</code>
+            {/* Subtle scan line effect */}
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-transparent animate-shimmer" />
           </pre>
         </div>
       </div>

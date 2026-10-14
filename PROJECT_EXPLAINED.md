@@ -181,7 +181,7 @@ Why this matters:
 │                                                      │
 │  ┌─────────────────────────────────────────────┐   │
 │  │   AI Chat (ARIA)                             │   │
-│  │   Talks to Groq API (server-side)           │   │
+│  │   Talks to Groq/Gemini APIs (server-side)   │   │
 │  │   Advises on architecture decisions          │   │
 │  └─────────────────────────────────────────────┘   │
 └────────────────────────────────────────────────────┘
@@ -282,7 +282,7 @@ The security auditor flags dangerous configurations — like SSH open to the ent
 >
 > My tool is a 4-step visual wizard — you pick the AWS services you need, fill a simple configuration form, and it generates production-ready Terraform files. You download them, run three commands in your terminal, and your cloud infrastructure is live.
 >
-> What makes it interesting technically: the infrastructure generator runs in the browser, and a small Next.js API route handles AI chat requests. I also built an automatic dependency resolver so if you pick EC2, it auto-adds VPC. There is an approximate cost estimator, a configuration-based security auditor, and an AI chatbot called ARIA powered by Groq.
+> What makes it interesting technically: the infrastructure generator runs in the browser, and a small Next.js API route handles AI chat requests, trying Groq and then Gemini with built-in offline suggestions as a fallback. I also built an automatic dependency resolver so if you pick EC2, it auto-adds VPC. There is an approximate cost estimator, a configuration-based security auditor, and an AI chatbot called ARIA.
 >
 > It supports Terraform, CloudFormation, and AWS CDK output formats and covers 32+ AWS services."
 

@@ -43,12 +43,14 @@ cd aws-infra-generator
 npm install
 ```
 
-**Optional — Enable the AI Infrastructure Advisor chatbot** (the rest of the app works without an API key):
+**Optional — Enable AI-powered answers in the Infrastructure Advisor chatbot** (the rest of the app works without API keys):
 
-1. Get a Groq API key at [console.groq.com/keys](https://console.groq.com/keys)
+1. Get a Groq API key at [console.groq.com/keys](https://console.groq.com/keys), or a Gemini API key at [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
 2. Create a `.env.local` file in the project root:
 ```bash
 GROQ_API_KEY=your_groq_api_key_here
+# Optional fallback:
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 Then start the dev server:
@@ -58,7 +60,7 @@ npm run dev
 
 Open **http://localhost:3000** in your browser.
 
-> Without the key, the AI chat advisor is unavailable. The infrastructure wizard and code generation still work.
+> Groq is tried first, then Gemini. If neither provider is configured or available, the chatbot gives limited built-in suggestions. Add a provider key for AI-generated answers.
 
 ### 2. Follow the wizard
 
@@ -133,7 +135,7 @@ Wizard progress is saved locally — refresh the page and pick up where you left
 
 ## 🤖 AI Infrastructure Advisor
 
-The AI chatbot is an architecture helper powered by **Groq** (Qwen 3.8 27B). It lives in the bottom-right corner of every page as a floating chat button. It requires a `GROQ_API_KEY`; the rest of the app works without one.
+The AI chatbot is an architecture helper powered by **Groq** (Qwen 3.8 27B), with **Gemini** as a fallback. It lives in the bottom-right corner of every page as a floating chat button. When neither provider is configured or available, it uses limited built-in suggestions instead of returning an error.
 
 ### What it does
 
@@ -223,7 +225,7 @@ The chatbot uses a **Next.js API route** (`/api/ai-chat`) as a server-side proxy
 Browser → POST /api/ai-chat → Groq API → Response → Browser
 ```
 
-The API sends the conversation history to Groq using the Qwen 3.8 27B model. Responses are returned as JSON and displayed with a typing animation.
+The API tries Groq with Qwen 3.8 27B, then several Gemini Flash models. If neither provider can answer, a small built-in offline response handles common AWS architecture questions. Responses are returned as JSON and displayed with a typing animation.
 
 **Model used:** `qwen/qwen3.8-27b`.
 
